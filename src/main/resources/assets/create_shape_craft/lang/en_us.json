@@ -1,0 +1,7 @@
+{
+  "block.create_shape_craft.shape_destroyer": "Shape Destroyer",
+  "block.create_shape_craft.shape_generator": "Shape Generator",
+  "create.item_attributes.shape_key": "shape key is: %s",
+  "item.create_shape_craft.shape": "Shape",
+  "itemGroup.create_shape_craft.main": "Create: Shape Craft"
+}
