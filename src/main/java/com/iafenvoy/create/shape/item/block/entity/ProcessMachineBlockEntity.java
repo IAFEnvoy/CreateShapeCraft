@@ -1,8 +1,11 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
+import com.simibubi.create.content.logistics.funnel.BeltFunnelBlock;
 import com.simibubi.create.content.logistics.tunnel.BeltTunnelBlock;
 import com.simibubi.create.content.logistics.tunnel.BrassTunnelBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import net.createmod.catnip.animation.LerpedFloat;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -56,7 +59,23 @@ public abstract class ProcessMachineBlockEntity extends BrassTunnelBlockEntity {
 
     @Override
     public void updateTunnelConnections() {
-        //Don't connect
+        //Process flaps only
+        this.flaps.clear();
+        if (this.level == null) return;
+        for (Direction direction : Iterate.horizontalDirections) {
+            BlockState nextState = this.level.getBlockState(this.worldPosition.relative(direction));
+            if (nextState.getBlock() instanceof BeltTunnelBlock) continue;
+            if (nextState.getBlock() instanceof BeltFunnelBlock && nextState.getValue(BeltFunnelBlock.SHAPE) == BeltFunnelBlock.Shape.EXTENDED && nextState.getValue(BeltFunnelBlock.HORIZONTAL_FACING) == direction.getOpposite())
+                continue;
+            this.flaps.put(direction, this.createChasingFlap());
+        }
+        this.sendData();
+    }
+
+    private LerpedFloat createChasingFlap() {
+        return LerpedFloat.linear()
+                .startWithValue(.25f)
+                .chase(0, .05f, LerpedFloat.Chaser.EXP);
     }
 
     @Override
@@ -82,6 +101,8 @@ public abstract class ProcessMachineBlockEntity extends BrassTunnelBlockEntity {
         this.outputStack = this.insertIntoTunnel(this, this.insertDirection.getOpposite(), this.outputStack, false);
     }
 
+    public abstract void process();
+
     @Override
     public boolean canInsert(Direction side, ItemStack stack) {
         this.insertDirection = side;
@@ -93,10 +114,7 @@ public abstract class ProcessMachineBlockEntity extends BrassTunnelBlockEntity {
         return stack.isEmpty();
     }
 
-    public abstract void process();
-
     public boolean isSide(Direction dir) {
         return dir.get2DDataValue() != -1 && dir.getAxis() != this.getBlockState().getValue(BeltTunnelBlock.HORIZONTAL_AXIS);
     }
-
 }
