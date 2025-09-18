@@ -12,6 +12,8 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class ShapeItemRenderer extends BlockEntityWithoutLevelRenderer {
     private final LayerModel model = new LayerModel(LayerModel.createBodyLayer().bakeRoot());
 
@@ -28,13 +30,18 @@ public class ShapeItemRenderer extends BlockEntityWithoutLevelRenderer {
         poseStack.mulPose(Axis.YP.rotationDegrees(90));
         ShapeInfo info = stack.get(CSCDataComponents.SHAPE);
         if (info == null) return;
-        for (ShapeInfo.Layer layer : info.layers()) {
+        List<ShapeInfo.Layer> layers = info.layers();
+        for (int i = 0, layersSize = layers.size(); i < layersSize; i++) {
+            ShapeInfo.Layer layer = layers.get(i);
+            poseStack.pushPose();
+            float scale = 1 - i * 0.2F;
+            poseStack.scale(scale, scale, scale);
             this.renderPart(poseStack, buffer, layer.topRight(), light, overlay);
             this.renderPart(poseStack, buffer, layer.bottomRight(), light, overlay);
             this.renderPart(poseStack, buffer, layer.bottomLeft(), light, overlay);
             this.renderPart(poseStack, buffer, layer.topLeft(), light, overlay);
+            poseStack.popPose();
             poseStack.translate(0, 0.001, 0);
-            poseStack.scale(0.75f, 0.75f, 0.75f);
         }
         poseStack.popPose();
     }

@@ -15,10 +15,15 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.List;
 
+@EventBusSubscriber
 public class ShapeGeneratorBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, IHaveHoveringInformation {
     private FilteringBehaviour filtering;
     protected final InfiniteProvideContainer container = new InfiniteProvideContainer(1, Predicates.IS_SHAPE);
@@ -58,5 +63,10 @@ public class ShapeGeneratorBlockEntity extends SmartBlockEntity implements IHave
 
     public IItemHandler getItemHandler() {
         return this.itemCapability.getCapability();
+    }
+
+    @SubscribeEvent
+    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CSCBlockEntities.SHAPE_GENERATOR.get(), (be, context) -> be.getItemHandler());
     }
 }

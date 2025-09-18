@@ -11,10 +11,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.List;
 
+@EventBusSubscriber
 public class ShapeDestroyerBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, IHaveHoveringInformation {
     protected final InfiniteDestroyContainer container = new InfiniteDestroyContainer();
     protected final ICapabilityProvider<IItemHandler> itemCapability = ICapabilityProvider.of(this.container);
@@ -39,5 +44,10 @@ public class ShapeDestroyerBlockEntity extends SmartBlockEntity implements IHave
 
     public IItemHandler getItemHandler() {
         return this.itemCapability.getCapability();
+    }
+
+    @SubscribeEvent
+    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CSCBlockEntities.SHAPE_DESTROYER.get(), (be, context) -> be.getItemHandler());
     }
 }

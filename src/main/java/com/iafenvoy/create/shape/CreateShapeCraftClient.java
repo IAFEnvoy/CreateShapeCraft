@@ -16,6 +16,9 @@ public class CreateShapeCraftClient {
 
     @SubscribeEvent
     public static void onInit(FMLClientSetupEvent event) {
+        CSCRenderers.registerRenderTypes();
         CSCRenderers.registerBlockEntityRenderers();
+        //FlyWheel
+        CSCRenderers.registerVisualizers();
     }
 }

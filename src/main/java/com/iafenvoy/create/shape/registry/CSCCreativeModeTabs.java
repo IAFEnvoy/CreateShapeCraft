@@ -20,10 +20,11 @@ public final class CSCCreativeModeTabs {
     public static final List<DeferredItem<?>> ITEMS = new LinkedList<>();
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN = register("main", () -> CreativeModeTab.builder()
-            .icon(() -> ShapeItem.fromInfo(BuiltinShapes.LOGO))
+            .icon(() -> ShapeItem.fromInfo(BuiltinShapes.ROCKET))
             .title(Component.translatable("itemGroup.%s.main".formatted(CreateShapeCraft.MOD_ID)))
             .displayItems((params, output) -> {
                 output.accept(ShapeItem.fromInfo(BuiltinShapes.LOGO));
+                output.accept(ShapeItem.fromInfo(BuiltinShapes.ROCKET));
                 BuiltinShapes.BASE.forEach(x -> output.accept(ShapeItem.fromInfo(x)));
                 ITEMS.forEach(output::accept);
             })

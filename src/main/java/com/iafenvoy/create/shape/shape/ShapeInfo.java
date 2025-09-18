@@ -13,9 +13,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 //https://viewer.shapez.io/
 public record ShapeInfo(List<Layer> layers) {
+    public static final int MAX_LAYERS = 4;
     public static final String EMPTY_SLUG = "-", LAYER_SEPARATOR = ":";
     public static final Codec<ShapeInfo> CODEC = Codec.STRING.xmap(ShapeInfo::parse, ShapeInfo::toString);
     public static final StreamCodec<ByteBuf, ShapeInfo> STREAM_CODEC = ByteBufCodecs.STRING_UTF8.map(ShapeInfo::parse, ShapeInfo::toString);
@@ -56,6 +58,29 @@ public record ShapeInfo(List<Layer> layers) {
             if (key.length() != 8) return EMPTY;
             return new Layer(Part.parse(key.substring(0, 2)), Part.parse(key.substring(2, 4)), Part.parse(key.substring(4, 6)), Part.parse(key.substring(6, 8)));
         }
+
+        public Layer withColor(Color color) {
+            return this.withColor(color, color, color, color);
+        }
+
+        public Layer withColor(Color topRightColor, Color bottomRightColor, Color bottomLeftColor, Color topLeftColor) {
+            return new Layer(this.topRight.withColor(topRightColor), this.bottomRight.withColor(bottomRightColor), this.bottomLeft.withColor(bottomLeftColor), this.topLeft.withColor(topLeftColor));
+        }
+
+        public static Optional<Layer> combine(Layer l1, Layer l2) {
+            return l1 == null || l2 == null ||
+                    !l1.topRight.isEmpty() && !l2.topRight.isEmpty() ||
+                    !l1.bottomRight.isEmpty() && !l2.bottomRight.isEmpty() ||
+                    !l1.bottomLeft.isEmpty() && !l2.bottomLeft.isEmpty() ||
+                    !l1.topLeft.isEmpty() && !l2.topLeft.isEmpty() ?
+                    Optional.empty() :
+                    Optional.of(new Layer(
+                            l1.topRight.isEmpty() ? l2.topRight : l1.topRight,
+                            l1.bottomRight.isEmpty() ? l2.bottomRight : l1.bottomRight,
+                            l1.bottomLeft.isEmpty() ? l2.bottomLeft : l1.bottomLeft,
+                            l1.topLeft.isEmpty() ? l2.topLeft : l1.topLeft
+                    ));
+        }
     }
 
     public record Part(Shape shape, Color color) {
@@ -74,6 +99,10 @@ public record ShapeInfo(List<Layer> layers) {
         @NotNull
         public static Part parse(String key) {
             return key.length() != 2 ? EMPTY : new Part(Shape.fromSlug(key.substring(0, 1)), Color.fromSlug(key.substring(1, 2)));
+        }
+
+        public Part withColor(Color color) {
+            return new Part(this.shape, color);
         }
     }
 

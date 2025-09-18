@@ -4,13 +4,13 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
   ],
+  "client": [
+    "BeltRendererMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   },
   "overwrites": {
     "requireAnnotations": true
-  },
-  "client": [
-    "BeltRendererMixin"
-  ]
+  }
 }

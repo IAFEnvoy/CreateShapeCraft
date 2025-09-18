@@ -3,6 +3,8 @@ package com.iafenvoy.create.shape.registry;
 import com.iafenvoy.create.shape.CreateShapeCraft;
 import com.iafenvoy.create.shape.item.block.ShapeDestroyerBlock;
 import com.iafenvoy.create.shape.item.block.ShapeGeneratorBlock;
+import com.iafenvoy.create.shape.item.block.SingleProcessMachineBlock;
+import com.iafenvoy.create.shape.shape.ShapeProcessors;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -17,6 +19,9 @@ public final class CSCBlocks {
 
     public static final DeferredBlock<ShapeGeneratorBlock> SHAPE_GENERATOR = register("shape_generator", ShapeGeneratorBlock::new);
     public static final DeferredBlock<ShapeDestroyerBlock> SHAPE_DESTROYER = register("shape_destroyer", ShapeDestroyerBlock::new);
+    public static final DeferredBlock<SingleProcessMachineBlock> ROTATOR_CW = register("rotator_cw", () -> new SingleProcessMachineBlock(ShapeProcessors::rotateClockwise));
+    public static final DeferredBlock<SingleProcessMachineBlock> ROTATOR_CCW = register("rotator_ccw", () -> new SingleProcessMachineBlock(ShapeProcessors::rotateCounterclockwise));
+    public static final DeferredBlock<SingleProcessMachineBlock> ROTATOR_180 = register("rotator_180", () -> new SingleProcessMachineBlock(ShapeProcessors::rotate180));
 
     public static <T extends Block> DeferredBlock<T> register(String id, Supplier<T> obj) {
         return register(id, obj, block -> new BlockItem(block, new Item.Properties()));
