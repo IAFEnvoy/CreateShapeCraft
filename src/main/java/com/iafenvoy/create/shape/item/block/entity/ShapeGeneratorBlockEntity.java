@@ -25,9 +25,9 @@ import java.util.List;
 
 @EventBusSubscriber
 public class ShapeGeneratorBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, IHaveHoveringInformation {
-    private FilteringBehaviour filtering;
     protected final InfiniteProvideContainer container = new InfiniteProvideContainer(1, Predicates.IS_SHAPE);
     protected final ICapabilityProvider<IItemHandler> itemCapability = ICapabilityProvider.of(this.container);
+    protected FilteringBehaviour filtering;
 
     public ShapeGeneratorBlockEntity(BlockPos pos, BlockState blockState) {
         super(CSCBlockEntities.SHAPE_GENERATOR.get(), pos, blockState);
@@ -36,8 +36,10 @@ public class ShapeGeneratorBlockEntity extends SmartBlockEntity implements IHave
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         //This method is called in super class constructor, so do not use method reference to call uninitialized fields.
-        //noinspection Convert2MethodRef
-        this.filtering = new FilteringBehaviour(this, new ShapeGeneratorFilterSlot()).withCallback(provided -> this.container.setProvided(provided)).withPredicate(Predicates.IS_SHAPE);
+        this.filtering = new FilteringBehaviour(this, new ShapeGeneratorFilterSlot())
+                .showCount()
+                .withCallback(stack -> this.container.setProvided(stack.copyWithCount(this.filtering.getAmount())))
+                .withPredicate(Predicates.IS_SHAPE);
         behaviours.add(this.filtering);
     }
 

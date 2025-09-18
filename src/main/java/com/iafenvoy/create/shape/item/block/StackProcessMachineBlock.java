@@ -5,21 +5,21 @@ import com.iafenvoy.create.shape.shape.ShapeInfo;
 import com.simibubi.create.content.logistics.tunnel.BeltTunnelBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
-public class SingleProcessMachineBlock extends ProcessMachineBlock {
-    private final Function<ShapeInfo, ShapeInfo> processor;
+public class StackProcessMachineBlock extends ProcessMachineBlock {
+    private final BiFunction<ShapeInfo, ShapeInfo, ShapeInfo> processor;
 
-    public SingleProcessMachineBlock(Function<ShapeInfo, ShapeInfo> processor) {
+    public StackProcessMachineBlock(BiFunction<ShapeInfo, ShapeInfo, ShapeInfo> processor) {
         this.processor = processor;
     }
 
     @Override
     public BlockEntityType<? extends BeltTunnelBlockEntity> getBlockEntityType() {
-        return CSCBlockEntities.SINGLE_PROCESS_MACHINE.get();
+        return CSCBlockEntities.STACK_PROCESS_MACHINE.get();
     }
 
-    public Function<ShapeInfo, ShapeInfo> getProcessor() {
+    public BiFunction<ShapeInfo, ShapeInfo, ShapeInfo> getProcessor() {
         return this.processor;
     }
 }
