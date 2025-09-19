@@ -23,6 +23,8 @@ public final class CSCBlocks {
     public static final DeferredBlock<DyeProcessMachineBlock> DYER = register("dyer", () -> new DyeProcessMachineBlock(ShapeProcessors::color));
     public static final DeferredBlock<StackProcessMachineBlock> STACKER = register("stacker", () -> new StackProcessMachineBlock(ShapeProcessors::stack));
     public static final DeferredBlock<CutProcessMachineBlock> CUTTER_HORIZONTAL = register("cutter_horizontal", () -> new CutProcessMachineBlock(ShapeProcessors::cutHorizontal));
+    public static final DeferredBlock<CutProcessMachineBlock> CUTTER_VERTICAL = register("cutter_vertical", () -> new CutProcessMachineBlock(ShapeProcessors::cutVertical));
+    public static final DeferredBlock<CutProcessMachineBlock> CUTTER_QUARTER = register("cutter_quarter", () -> new CutProcessMachineBlock(ShapeProcessors::cutQuarter));
 
     public static <T extends Block> DeferredBlock<T> register(String id, Supplier<T> obj) {
         return register(id, obj, block -> new BlockItem(block, new Item.Properties()));

@@ -1,5 +1,8 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
+import com.iafenvoy.create.shape.item.ShapeDyeItem;
+import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
+import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.content.logistics.funnel.BeltFunnelBlock;
 import com.simibubi.create.content.logistics.tunnel.BeltTunnelBlock;
 import com.simibubi.create.content.logistics.tunnel.BrassTunnelBlockEntity;
@@ -32,6 +35,28 @@ public abstract class ProcessMachineBlockEntity extends BrassTunnelBlockEntity {
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(new LinkedList<>());//Ignore all sub behaviours
+        behaviours.add(new DirectBeltInputBehaviour(this)
+                .onlyInsertWhen(this::isRightForShape)
+                .allowingBeltFunnels()
+                .setInsertionHandler(this::insertShape));
+    }
+
+    private boolean isRightForShape(Direction dir) {
+        return dir.get2DDataValue() != -1 && dir.getAxis() == this.getBlockState().getValue(BeltTunnelBlock.HORIZONTAL_AXIS);
+    }
+
+    private ItemStack insertShape(TransportedItemStack stack, Direction side, boolean simulate) {
+        ItemStack input = stack.stack;
+        if (this.isRightForShape(side) && (this.inputStack.isEmpty() || ItemStack.isSameItemSameComponents(this.inputStack, input)) && input.getItem() instanceof ShapeDyeItem) {
+            int remain = MAX_STACK_COUNT - this.inputStack.getCount();
+            int inserted = Math.min(input.getCount(), remain);
+            if (!simulate) {
+                if (this.inputStack.isEmpty()) this.inputStack = input.copyWithCount(inserted);
+                else this.inputStack.grow(inserted);
+            }
+            input.shrink(inserted);
+        }
+        return input.isEmpty() ? ItemStack.EMPTY : input;
     }
 
     @Override

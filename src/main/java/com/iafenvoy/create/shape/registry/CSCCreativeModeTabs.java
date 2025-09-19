@@ -2,6 +2,7 @@ package com.iafenvoy.create.shape.registry;
 
 import com.iafenvoy.create.shape.CreateShapeCraft;
 import com.iafenvoy.create.shape.item.ShapeItem;
+import com.iafenvoy.create.shape.shape.BuiltinFilters;
 import com.iafenvoy.create.shape.shape.BuiltinShapes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -28,6 +29,7 @@ public final class CSCCreativeModeTabs {
                 output.accept(ShapeItem.fromInfo(BuiltinShapes.ROCKET));
                 BuiltinShapes.BASE.forEach(x -> output.accept(ShapeItem.fromInfo(x)));
                 ITEMS.forEach(output::accept);
+                BuiltinFilters.CORNERS.stream().map(BuiltinFilters::toFilterItem).forEach(output::accept);
             })
             .build());
 

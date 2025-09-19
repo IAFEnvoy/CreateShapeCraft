@@ -1,5 +1,7 @@
 {
   "block.create_shape_craft.cutter_horizontal": "Horizontal Cutter",
+  "block.create_shape_craft.cutter_quarter": "Quarter Cutter",
+  "block.create_shape_craft.cutter_vertical": "Vertical Cutter",
   "block.create_shape_craft.dyer": "Shape Dyer",
   "block.create_shape_craft.rotator_180": "180 Degree Rotator",
   "block.create_shape_craft.rotator_ccw": "Counterclockwise Rotator",

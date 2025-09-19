@@ -8,7 +8,6 @@ import com.iafenvoy.create.shape.registry.CSCDataComponents;
 import com.iafenvoy.create.shape.shape.ShapeInfo;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
-import com.simibubi.create.content.logistics.tunnel.BeltTunnelBlock;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,10 +31,6 @@ public class DyeProcessMachineBlockEntity extends ProcessMachineBlockEntity {
             throw new IllegalArgumentException("DyeProcessMachineBlockEntity need a block with DyeProcessMachineBlock");
     }
 
-    private boolean isRightForDye(Direction dir) {
-        return dir.get2DDataValue() != -1 && dir.getAxis() != this.getBlockState().getValue(BeltTunnelBlock.HORIZONTAL_AXIS);
-    }
-
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
@@ -45,7 +40,11 @@ public class DyeProcessMachineBlockEntity extends ProcessMachineBlockEntity {
                 .setInsertionHandler(this::insertColor));
     }
 
-    public ItemStack insertColor(TransportedItemStack stack, Direction side, boolean simulate) {
+    private boolean isRightForDye(Direction dir) {
+        return dir.get2DDataValue() != -1;
+    }
+
+    private ItemStack insertColor(TransportedItemStack stack, Direction side, boolean simulate) {
         ItemStack input = stack.stack;
         if (this.isRightForDye(side) && (this.dyeStack.isEmpty() || ItemStack.isSameItem(this.dyeStack, input)) && input.getItem() instanceof ShapeDyeItem) {
             int remain = MAX_STACK_COUNT - this.dyeStack.getCount();

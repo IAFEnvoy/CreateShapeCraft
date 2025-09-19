@@ -25,7 +25,7 @@ public record ShapeInfo(List<Layer> layers) {
     public static final ShapeInfo DEFAULT = parse("CuCuCuCu");
 
     public ShapeInfo(List<Layer> layers) {
-        this.layers = layers.stream().filter(Layer::isEmpty).toList();
+        this.layers = layers.stream().filter(x -> !x.isEmpty()).toList();
     }
 
     @Override
