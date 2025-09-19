@@ -20,8 +20,8 @@ public final class CSCBlocks {
     public static final DeferredBlock<SingleProcessMachineBlock> ROTATOR_CW = register("rotator_cw", () -> new SingleProcessMachineBlock(ShapeProcessors::rotateClockwise));
     public static final DeferredBlock<SingleProcessMachineBlock> ROTATOR_CCW = register("rotator_ccw", () -> new SingleProcessMachineBlock(ShapeProcessors::rotateCounterclockwise));
     public static final DeferredBlock<SingleProcessMachineBlock> ROTATOR_180 = register("rotator_180", () -> new SingleProcessMachineBlock(ShapeProcessors::rotate180));
-    public static final DeferredBlock<DyeProcessMachineBlock> DYE = register("dye", () -> new DyeProcessMachineBlock(ShapeProcessors::color));
-    public static final DeferredBlock<StackProcessMachineBlock> STACK = register("stack", () -> new StackProcessMachineBlock(ShapeProcessors::stack));
+    public static final DeferredBlock<DyeProcessMachineBlock> DYER = register("dyer", () -> new DyeProcessMachineBlock(ShapeProcessors::color));
+    public static final DeferredBlock<StackProcessMachineBlock> STACKER = register("stacker", () -> new StackProcessMachineBlock(ShapeProcessors::stack));
 
     public static <T extends Block> DeferredBlock<T> register(String id, Supplier<T> obj) {
         return register(id, obj, block -> new BlockItem(block, new Item.Properties()));

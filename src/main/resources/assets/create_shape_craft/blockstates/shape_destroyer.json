@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "create_shape_craft:block/shape_destroyer"
+    }
+  }
+}

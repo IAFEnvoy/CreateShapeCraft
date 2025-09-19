@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "create_shape_craft:block/stacker"
+    },
+    "axis=z": {
+      "model": "create_shape_craft:block/stacker",
+      "y": 90
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "create_shape_craft:block/dyer"
+    },
+    "axis=z": {
+      "model": "create_shape_craft:block/dyer",
+      "y": 90
+    }
+  }
+}

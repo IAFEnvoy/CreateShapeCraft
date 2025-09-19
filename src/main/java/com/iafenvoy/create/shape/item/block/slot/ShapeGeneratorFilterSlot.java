@@ -7,6 +7,6 @@ import net.minecraft.world.phys.Vec3;
 public class ShapeGeneratorFilterSlot extends ValueBoxTransform.Sided {
     @Override
     protected Vec3 getSouthLocation() {
-        return VecHelper.voxelSpace(8, 8, 15.5);
+        return VecHelper.voxelSpace(8, 10, 15.5);
     }
 }

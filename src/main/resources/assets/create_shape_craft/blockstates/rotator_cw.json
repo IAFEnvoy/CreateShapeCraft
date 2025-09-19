@@ -1,10 +1,10 @@
 {
   "variants": {
     "axis=x": {
-      "model": "create:block/tunnel/brass_tunnel/straight"
+      "model": "create_shape_craft:block/rotator_cw"
     },
     "axis=z": {
-      "model": "create:block/tunnel/brass_tunnel/straight",
+      "model": "create_shape_craft:block/rotator_cw",
       "y": 90
     }
   }

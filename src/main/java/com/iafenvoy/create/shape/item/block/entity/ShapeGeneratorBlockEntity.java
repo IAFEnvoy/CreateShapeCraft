@@ -25,7 +25,7 @@ import java.util.List;
 
 @EventBusSubscriber
 public class ShapeGeneratorBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, IHaveHoveringInformation {
-    protected final InfiniteProvideContainer container = new InfiniteProvideContainer(1, Predicates.IS_SHAPE);
+    protected final InfiniteProvideContainer container = new InfiniteProvideContainer(1, Predicates.ALLOW_GENERATE);
     protected final ICapabilityProvider<IItemHandler> itemCapability = ICapabilityProvider.of(this.container);
     protected FilteringBehaviour filtering;
 
@@ -39,7 +39,7 @@ public class ShapeGeneratorBlockEntity extends SmartBlockEntity implements IHave
         this.filtering = new FilteringBehaviour(this, new ShapeGeneratorFilterSlot())
                 .showCount()
                 .withCallback(stack -> this.container.setProvided(stack.copyWithCount(this.filtering.getAmount())))
-                .withPredicate(Predicates.IS_SHAPE);
+                .withPredicate(Predicates.ALLOW_GENERATE);
         behaviours.add(this.filtering);
     }
 

@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Supplier;
 
+@SuppressWarnings("unused")
 public final class CSCCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, CreateShapeCraft.MOD_ID);
 
