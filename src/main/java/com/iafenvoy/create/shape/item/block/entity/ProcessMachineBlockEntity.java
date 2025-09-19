@@ -98,7 +98,14 @@ public abstract class ProcessMachineBlockEntity extends BrassTunnelBlockEntity {
             this.processTimer = 0;
             this.process();
         }
-        this.outputStack = this.insertIntoTunnel(this, this.insertDirection.getOpposite(), this.outputStack, false);
+        assert this.level != null;
+        if (this.level.getBlockEntity(this.getBlockPos().offset(this.insertDirection.getOpposite().getNormal())) instanceof ProcessMachineBlockEntity process) {
+            process.canInsert(this.insertDirection, this.outputStack);
+            process.setStackToDistribute(this.outputStack, this.insertDirection);
+        } else {
+            this.outputStack = this.insertIntoTunnel(this, this.insertDirection.getOpposite(), this.outputStack, false);
+            if (this.outputStack == null) this.outputStack = ItemStack.EMPTY;
+        }
     }
 
     public abstract void process();

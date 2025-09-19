@@ -2,6 +2,7 @@ package com.iafenvoy.create.shape.shape;
 
 import com.google.common.collect.ImmutableList;
 
+import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -30,38 +31,38 @@ public final class ShapeProcessors {
     //Cutter
     public static PairResult cutVertical(ShapeInfo info) {
         return new PairResult(
-                new ShapeInfo(info.layers().stream().map(x -> new ShapeInfo.Layer(ShapeInfo.Part.EMPTY, ShapeInfo.Part.EMPTY, x.bottomLeft(), x.topLeft())).toList()),
-                new ShapeInfo(info.layers().stream().map(x -> new ShapeInfo.Layer(x.topRight(), x.bottomRight(), ShapeInfo.Part.EMPTY, ShapeInfo.Part.EMPTY)).toList())
+                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.BOTTOM_LEFT, ShapeInfo.Quarter.TOP_LEFT)).toList()),
+                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.TOP_RIGHT, ShapeInfo.Quarter.BOTTOM_RIGHT)).toList())
         );
     }
 
     public static PairResult cutHorizontal(ShapeInfo info) {
         return new PairResult(
-                new ShapeInfo(info.layers().stream().map(x -> new ShapeInfo.Layer(x.topRight(), ShapeInfo.Part.EMPTY, ShapeInfo.Part.EMPTY, x.topLeft())).toList()),
-                new ShapeInfo(info.layers().stream().map(x -> new ShapeInfo.Layer(ShapeInfo.Part.EMPTY, x.bottomRight(), x.bottomLeft(), ShapeInfo.Part.EMPTY)).toList())
+                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.TOP_RIGHT, ShapeInfo.Quarter.TOP_LEFT)).toList()),
+                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.BOTTOM_RIGHT, ShapeInfo.Quarter.BOTTOM_LEFT)).toList())
         );
     }
 
     public static QuaternionResult cutQuarter(ShapeInfo info) {
         return new QuaternionResult(
-                new ShapeInfo(info.layers().stream().map(x -> new ShapeInfo.Layer(x.topRight(), ShapeInfo.Part.EMPTY, ShapeInfo.Part.EMPTY, ShapeInfo.Part.EMPTY)).toList()),
-                new ShapeInfo(info.layers().stream().map(x -> new ShapeInfo.Layer(ShapeInfo.Part.EMPTY, x.bottomRight(), ShapeInfo.Part.EMPTY, ShapeInfo.Part.EMPTY)).toList()),
-                new ShapeInfo(info.layers().stream().map(x -> new ShapeInfo.Layer(ShapeInfo.Part.EMPTY, ShapeInfo.Part.EMPTY, x.bottomLeft(), ShapeInfo.Part.EMPTY)).toList()),
-                new ShapeInfo(info.layers().stream().map(x -> new ShapeInfo.Layer(ShapeInfo.Part.EMPTY, ShapeInfo.Part.EMPTY, ShapeInfo.Part.EMPTY, x.topLeft())).toList())
+                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.TOP_RIGHT)).toList()),
+                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.BOTTOM_RIGHT)).toList()),
+                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.BOTTOM_LEFT)).toList()),
+                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.TOP_LEFT)).toList())
         );
     }
 
     //Rotator
     public static ShapeInfo rotateClockwise(ShapeInfo info) {
-        return new ShapeInfo(info.layers().stream().map(x -> new ShapeInfo.Layer(x.topLeft(), x.topRight(), x.bottomRight(), x.bottomLeft())).toList());
+        return new ShapeInfo(info.layers().stream().map(x -> x.rotate(q -> q.cycle(false))).toList());
     }
 
     public static ShapeInfo rotateCounterclockwise(ShapeInfo info) {
-        return new ShapeInfo(info.layers().stream().map(x -> new ShapeInfo.Layer(x.bottomRight(), x.bottomLeft(), x.topLeft(), x.topRight())).toList());
+        return new ShapeInfo(info.layers().stream().map(x -> x.rotate(q -> q.cycle(true))).toList());
     }
 
     public static ShapeInfo rotate180(ShapeInfo info) {
-        return new ShapeInfo(info.layers().stream().map(x -> new ShapeInfo.Layer(x.bottomLeft(), x.topLeft(), x.topRight(), x.bottomRight())).toList());
+        return new ShapeInfo(info.layers().stream().map(x -> x.rotate(q -> q.cycle(false).cycle(false))).toList());
     }
 
     //Stacker
@@ -94,8 +95,8 @@ public final class ShapeProcessors {
         return new ShapeInfo(info.layers().stream().map(x -> x.withColor(color)).toList());
     }
 
-    public static ShapeInfo color(ShapeInfo info, ShapeInfo.Color topRightColor, ShapeInfo.Color bottomRightColor, ShapeInfo.Color bottomLeftColor, ShapeInfo.Color topLeftColor) {
-        return new ShapeInfo(info.layers().stream().map(x -> x.withColor(topRightColor, bottomRightColor, bottomLeftColor, topLeftColor)).toList());
+    public static ShapeInfo color(ShapeInfo info, EnumMap<ShapeInfo.Quarter, ShapeInfo.Color> colors) {
+        return new ShapeInfo(info.layers().stream().map(x -> x.withColor(colors)).toList());
     }
 
     //Data Structure

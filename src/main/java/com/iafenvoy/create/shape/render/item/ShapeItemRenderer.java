@@ -36,10 +36,7 @@ public class ShapeItemRenderer extends BlockEntityWithoutLevelRenderer {
             poseStack.pushPose();
             float scale = 1 - i * 0.2F;
             poseStack.scale(scale, scale, scale);
-            this.renderPart(poseStack, buffer, layer.topRight(), light, overlay);
-            this.renderPart(poseStack, buffer, layer.bottomRight(), light, overlay);
-            this.renderPart(poseStack, buffer, layer.bottomLeft(), light, overlay);
-            this.renderPart(poseStack, buffer, layer.topLeft(), light, overlay);
+            ShapeInfo.Quarter.stream().map(x -> layer.parts().get(x)).forEach(x -> this.renderPart(poseStack, buffer, x, light, overlay));
             poseStack.popPose();
             poseStack.translate(0, 0.001, 0);
         }

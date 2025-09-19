@@ -4,16 +4,16 @@ import com.iafenvoy.create.shape.CreateShapeCraft;
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 //https://viewer.shapez.io/
 public record ShapeInfo(List<Layer> layers) {
@@ -44,42 +44,46 @@ public record ShapeInfo(List<Layer> layers) {
         return true;
     }
 
-    public record Layer(Part topRight, Part bottomRight, Part bottomLeft, Part topLeft) {
-        public static final Layer EMPTY = new Layer(Part.EMPTY, Part.EMPTY, Part.EMPTY, Part.EMPTY);
+    public record Layer(EnumMap<Quarter, Part> parts) {
+        public static final Layer EMPTY = new Layer(x -> Part.EMPTY);
+
+        public Layer(Function<Quarter, Part> function) {
+            this(Util.make(new EnumMap<>(Quarter.class), map -> Quarter.stream().forEach(x -> map.put(x, function.apply(x)))));
+        }
 
         @Override
         @NotNull
         public String toString() {
-            return this.topRight.toString() + this.bottomRight.toString() + this.bottomLeft.toString() + this.topLeft.toString();
+            return Quarter.stream().map(this.parts::get).map(Part::toString).reduce(new StringBuilder(), StringBuilder::append, StringBuilder::append).toString();
         }
 
         @NotNull
         public static Layer parse(String key) {
             if (key.length() != 8) return EMPTY;
-            return new Layer(Part.parse(key.substring(0, 2)), Part.parse(key.substring(2, 4)), Part.parse(key.substring(4, 6)), Part.parse(key.substring(6, 8)));
+            return new Layer(x -> Part.parse(key.substring(x.ordinal() * 2, x.ordinal() * 2 + 2)));
+        }
+
+        public Layer collect(Quarter... quarters) {
+            List<Quarter> list = List.of(quarters);
+            return new Layer(x -> list.contains(x) ? this.parts.get(x) : Part.EMPTY);
         }
 
         public Layer withColor(Color color) {
-            return this.withColor(color, color, color, color);
+            return this.withColor(Util.make(new EnumMap<>(Quarter.class), map -> Quarter.stream().forEach(x -> map.put(x, color))));
         }
 
-        public Layer withColor(Color topRightColor, Color bottomRightColor, Color bottomLeftColor, Color topLeftColor) {
-            return new Layer(this.topRight.withColor(topRightColor), this.bottomRight.withColor(bottomRightColor), this.bottomLeft.withColor(bottomLeftColor), this.topLeft.withColor(topLeftColor));
+        public Layer withColor(EnumMap<Quarter, Color> colors) {
+            return new Layer(x -> this.parts.get(x).withColor(colors.get(x)));
+        }
+
+        public Layer rotate(Function<Quarter, Quarter> mapping) {
+            return new Layer(x -> this.parts.get(mapping.apply(x)));
         }
 
         public static Optional<Layer> combine(Layer l1, Layer l2) {
-            return l1 == null || l2 == null ||
-                    !l1.topRight.isEmpty() && !l2.topRight.isEmpty() ||
-                    !l1.bottomRight.isEmpty() && !l2.bottomRight.isEmpty() ||
-                    !l1.bottomLeft.isEmpty() && !l2.bottomLeft.isEmpty() ||
-                    !l1.topLeft.isEmpty() && !l2.topLeft.isEmpty() ?
+            return l1 == null || l2 == null || Quarter.stream().anyMatch(x -> !l1.parts.get(x).isEmpty() && !l2.parts.get(x).isEmpty()) ?
                     Optional.empty() :
-                    Optional.of(new Layer(
-                            l1.topRight.isEmpty() ? l2.topRight : l1.topRight,
-                            l1.bottomRight.isEmpty() ? l2.bottomRight : l1.bottomRight,
-                            l1.bottomLeft.isEmpty() ? l2.bottomLeft : l1.bottomLeft,
-                            l1.topLeft.isEmpty() ? l2.topLeft : l1.topLeft
-                    ));
+                    Optional.of(new Layer(x -> l1.parts.get(x).isEmpty() ? l2.parts.get(x) : l1.parts.get(x)));
         }
     }
 
@@ -169,6 +173,19 @@ public record ShapeInfo(List<Layer> layers) {
         @Nullable
         public static Color fromSlug(String slug) {
             return Arrays.stream(values()).filter(x -> Objects.equals(x.getSlug(), slug)).findAny().orElse(null);
+        }
+    }
+
+    public enum Quarter {
+        TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT, TOP_LEFT;
+
+        public static Stream<Quarter> stream() {
+            return Stream.of(values());
+        }
+
+        public Quarter cycle(boolean clockwise) {
+            Quarter[] types = values();
+            return types[(this.ordinal() + (clockwise ? 1 : types.length - 1)) % types.length];
         }
     }
 }

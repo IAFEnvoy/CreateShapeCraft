@@ -1,7 +1,4 @@
-package com.iafenvoy.create.shape.render.model;// Made with Blockbench 4.12.6
-// Exported for Minecraft version 1.17 or later with Mojang mappings
-// Paste this class into your mod and generate all required imports
-
+package com.iafenvoy.create.shape.render.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -13,17 +10,17 @@ import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
 public class LayerModel extends EntityModel<Entity> {
-    private final ModelPart bb_main;
+    private final ModelPart root;
 
     public LayerModel(ModelPart root) {
-        this.bb_main = root.getChild("bb_main");
+        this.root = root.getChild("root");
     }
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
-        partdefinition.addOrReplaceChild("bb_main", CubeListBuilder.create()
-                        .texOffs(0, 0).addBox(0, 0, 0, 16, 0.001F, 16, new CubeDeformation(0)),
+        partdefinition.addOrReplaceChild("root", CubeListBuilder.create()
+                        .texOffs(0, 0).addBox(0, 0, 0, 16, 0.01F, 16, new CubeDeformation(0)),
                 PartPose.offset(0, 0, 0));
         return LayerDefinition.create(meshdefinition, 16, 16);
     }
@@ -34,6 +31,6 @@ public class LayerModel extends EntityModel<Entity> {
 
     @Override
     public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer, int light, int overlay, int color) {
-        this.bb_main.render(poseStack, vertexConsumer, light, overlay, color);
+        this.root.render(poseStack, vertexConsumer, light, overlay, color);
     }
 }
