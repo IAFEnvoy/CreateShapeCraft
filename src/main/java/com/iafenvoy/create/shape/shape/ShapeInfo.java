@@ -8,6 +8,7 @@ import net.minecraft.Util;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.StringRepresentable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,6 +23,10 @@ public record ShapeInfo(List<Layer> layers) {
     public static final Codec<ShapeInfo> CODEC = Codec.STRING.xmap(ShapeInfo::parse, ShapeInfo::toString);
     public static final StreamCodec<ByteBuf, ShapeInfo> STREAM_CODEC = ByteBufCodecs.STRING_UTF8.map(ShapeInfo::parse, ShapeInfo::toString);
     public static final ShapeInfo DEFAULT = parse("CuCuCuCu");
+
+    public ShapeInfo(List<Layer> layers) {
+        this.layers = layers.stream().filter(Layer::isEmpty).toList();
+    }
 
     @Override
     @NotNull
@@ -49,6 +54,10 @@ public record ShapeInfo(List<Layer> layers) {
 
         public Layer(Function<Quarter, Part> function) {
             this(Util.make(new EnumMap<>(Quarter.class), map -> Quarter.stream().forEach(x -> map.put(x, function.apply(x)))));
+        }
+
+        public boolean isEmpty() {
+            return this == EMPTY || this.parts.values().stream().allMatch(Part::isEmpty);
         }
 
         @Override
@@ -176,8 +185,10 @@ public record ShapeInfo(List<Layer> layers) {
         }
     }
 
-    public enum Quarter {
+    public enum Quarter implements StringRepresentable {
         TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT, TOP_LEFT;
+        public static final Codec<Quarter> CODEC = StringRepresentable.fromEnum(Quarter::values);
+        public static final StreamCodec<ByteBuf, Quarter> STREAM_CODEC = ByteBufCodecs.fromCodec(CODEC);
 
         public static Stream<Quarter> stream() {
             return Stream.of(values());
@@ -186,6 +197,15 @@ public record ShapeInfo(List<Layer> layers) {
         public Quarter cycle(boolean clockwise) {
             Quarter[] types = values();
             return types[(this.ordinal() + (clockwise ? 1 : types.length - 1)) % types.length];
+        }
+
+        public String getTranslateKey() {
+            return "quarter.%s.%s".formatted(CreateShapeCraft.MOD_ID, this.getSerializedName());
+        }
+
+        @Override
+        public @NotNull String getSerializedName() {
+            return this.name().toLowerCase(Locale.ROOT);
         }
     }
 }

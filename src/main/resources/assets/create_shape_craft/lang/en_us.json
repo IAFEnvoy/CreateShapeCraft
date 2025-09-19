@@ -1,4 +1,5 @@
 {
+  "block.create_shape_craft.cutter_horizontal": "Horizontal Cutter",
   "block.create_shape_craft.dyer": "Shape Dyer",
   "block.create_shape_craft.rotator_180": "180 Degree Rotator",
   "block.create_shape_craft.rotator_ccw": "Counterclockwise Rotator",
@@ -7,6 +8,9 @@
   "block.create_shape_craft.shape_generator": "Shape Generator",
   "block.create_shape_craft.stacker": "Shape Stacker",
   "create.item_attributes.shape_key": "shape key is: %s",
+  "create.item_attributes.shape_layer_count": "shape layer count is: %s",
+  "create.item_attributes.shape_part_empty": "shape %s part is empty",
+  "create.item_attributes.shape_part_non_empty": "shape %s part is not empty",
   "item.create_shape_craft.blue_shape_dye": "Blue Shape Dye",
   "item.create_shape_craft.cyan_shape_dye": "Cyan Shape Dye",
   "item.create_shape_craft.green_shape_dye": "Green Shape Dye",
@@ -16,5 +20,9 @@
   "item.create_shape_craft.uncolored_shape_dye": "Uncolored Shape Dye",
   "item.create_shape_craft.white_shape_dye": "White Shape Dye",
   "item.create_shape_craft.yellow_shape_dye": "Yellow Shape Dye",
-  "itemGroup.create_shape_craft.main": "Create: Shape Craft"
+  "itemGroup.create_shape_craft.main": "Create: Shape Craft",
+  "quarter.create_shape_craft.bottom_left": "bottom left",
+  "quarter.create_shape_craft.bottom_right": "bottom right",
+  "quarter.create_shape_craft.top_left": "top left",
+  "quarter.create_shape_craft.top_right": "top right"
 }

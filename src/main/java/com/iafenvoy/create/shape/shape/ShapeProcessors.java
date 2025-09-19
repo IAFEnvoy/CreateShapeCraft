@@ -29,22 +29,22 @@ import java.util.Optional;
  * */
 public final class ShapeProcessors {
     //Cutter
-    public static PairResult cutVertical(ShapeInfo info) {
-        return new PairResult(
+    public static List<ShapeInfo> cutVertical(ShapeInfo info) {
+        return List.of(
                 new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.BOTTOM_LEFT, ShapeInfo.Quarter.TOP_LEFT)).toList()),
                 new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.TOP_RIGHT, ShapeInfo.Quarter.BOTTOM_RIGHT)).toList())
         );
     }
 
-    public static PairResult cutHorizontal(ShapeInfo info) {
-        return new PairResult(
+    public static List<ShapeInfo> cutHorizontal(ShapeInfo info) {
+        return List.of(
                 new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.TOP_RIGHT, ShapeInfo.Quarter.TOP_LEFT)).toList()),
                 new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.BOTTOM_RIGHT, ShapeInfo.Quarter.BOTTOM_LEFT)).toList())
         );
     }
 
-    public static QuaternionResult cutQuarter(ShapeInfo info) {
-        return new QuaternionResult(
+    public static List<ShapeInfo> cutQuarter(ShapeInfo info) {
+        return List.of(
                 new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.TOP_RIGHT)).toList()),
                 new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.BOTTOM_RIGHT)).toList()),
                 new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.BOTTOM_LEFT)).toList()),
@@ -97,18 +97,5 @@ public final class ShapeProcessors {
 
     public static ShapeInfo color(ShapeInfo info, EnumMap<ShapeInfo.Quarter, ShapeInfo.Color> colors) {
         return new ShapeInfo(info.layers().stream().map(x -> x.withColor(colors)).toList());
-    }
-
-    //Data Structure
-    public record PairResult(ShapeInfo first, ShapeInfo second) {
-        public List<ShapeInfo> collect() {
-            return List.of(this.first, this.second);
-        }
-    }
-
-    public record QuaternionResult(ShapeInfo first, ShapeInfo second, ShapeInfo third, ShapeInfo forth) {
-        public List<ShapeInfo> collect() {
-            return List.of(this.first, this.second, this.third, this.forth);
-        }
     }
 }

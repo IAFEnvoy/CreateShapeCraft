@@ -99,16 +99,33 @@ public abstract class ProcessMachineBlockEntity extends BrassTunnelBlockEntity {
             this.process();
         }
         assert this.level != null;
-        if (this.level.getBlockEntity(this.getBlockPos().offset(this.insertDirection.getOpposite().getNormal())) instanceof ProcessMachineBlockEntity process) {
-            process.canInsert(this.insertDirection, this.outputStack);
-            process.setStackToDistribute(this.outputStack, this.insertDirection);
-        } else {
-            this.outputStack = this.insertIntoTunnel(this, this.insertDirection.getOpposite(), this.outputStack, false);
-            if (this.outputStack == null) this.outputStack = ItemStack.EMPTY;
+        for (int i = 0; i < this.getOutputStackCount(); i++) {
+            ItemStack stack = this.getOutputStack(i);
+            if (this.level.getBlockEntity(this.getBlockPos().offset(this.insertDirection.getOpposite().getNormal())) instanceof ProcessMachineBlockEntity process) {
+                process.canInsert(this.insertDirection, stack);
+                process.setStackToDistribute(stack, this.insertDirection);
+            } else {
+                ItemStack result = this.insertIntoTunnel(this, this.insertDirection.getOpposite(), stack, false);
+                if (result == null) result = ItemStack.EMPTY;
+                this.setOutputStack(i, result);
+            }
         }
     }
 
-    public abstract void process();
+    protected abstract void process();
+
+    //FIXME::Use Container Later
+    protected int getOutputStackCount() {
+        return 1;
+    }
+
+    protected ItemStack getOutputStack(int index) {
+        return this.outputStack;
+    }
+
+    protected void setOutputStack(int index, ItemStack stack) {
+        this.outputStack = stack;
+    }
 
     @Override
     public boolean canInsert(Direction side, ItemStack stack) {
@@ -122,6 +139,6 @@ public abstract class ProcessMachineBlockEntity extends BrassTunnelBlockEntity {
     }
 
     public boolean isSide(Direction dir) {
-        return dir.get2DDataValue() != -1 && dir.getAxis() != this.getBlockState().getValue(BeltTunnelBlock.HORIZONTAL_AXIS);
+        return dir.get2DDataValue() != -1;
     }
 }

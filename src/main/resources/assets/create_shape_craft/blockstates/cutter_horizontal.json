@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "create_shape_craft:block/cutter_horizontal"
+    },
+    "axis=z": {
+      "model": "create_shape_craft:block/cutter_horizontal",
+      "y": 90
+    }
+  }
+}

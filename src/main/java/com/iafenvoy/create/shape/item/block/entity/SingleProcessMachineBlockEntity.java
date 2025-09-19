@@ -23,7 +23,7 @@ public class SingleProcessMachineBlockEntity extends ProcessMachineBlockEntity {
     }
 
     @Override
-    public void process() {
+    protected void process() {
         ShapeInfo info = this.inputStack.get(CSCDataComponents.SHAPE);
         if (this.inputStack.isEmpty() || info == null) return;
         ItemStack result = ShapeItem.fromInfo(this.processor.apply(info));
@@ -31,7 +31,7 @@ public class SingleProcessMachineBlockEntity extends ProcessMachineBlockEntity {
         if (this.outputStack.isEmpty()) {
             this.outputStack = result;
             success = true;
-        } else if (ItemStack.isSameItemSameComponents(this.outputStack, result)) {
+        } else if (ItemStack.isSameItemSameComponents(this.outputStack, result) && this.outputStack.getCount() < MAX_STACK_COUNT) {
             this.outputStack.grow(1);
             success = true;
         }
