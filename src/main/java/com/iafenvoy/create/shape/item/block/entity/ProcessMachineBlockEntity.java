@@ -123,33 +123,25 @@ public abstract class ProcessMachineBlockEntity extends BrassTunnelBlockEntity {
             this.processTimer = 0;
             this.process();
         }
-        assert this.level != null;
-        for (int i = 0; i < this.getOutputStackCount(); i++) {
-            ItemStack stack = this.getOutputStack(i);
-            if (this.level.getBlockEntity(this.getBlockPos().offset(this.insertDirection.getOpposite().getNormal())) instanceof ProcessMachineBlockEntity process) {
-                process.canInsert(this.insertDirection, stack);
-                process.setStackToDistribute(stack, this.insertDirection);
-            } else {
-                ItemStack result = this.insertIntoTunnel(this, this.insertDirection.getOpposite(), stack, false);
-                if (result == null) result = ItemStack.EMPTY;
-                this.setOutputStack(i, result);
-            }
-        }
+        this.distributeOutputs();
     }
 
     protected abstract void process();
 
-    //FIXME::Use Container Later
-    protected int getOutputStackCount() {
-        return 1;
+    protected void distributeOutputs() {
+        this.outputStack = this.distributeStack(this.outputStack);
     }
 
-    protected ItemStack getOutputStack(int index) {
-        return this.outputStack;
-    }
-
-    protected void setOutputStack(int index, ItemStack stack) {
-        this.outputStack = stack;
+    public ItemStack distributeStack(ItemStack stack) {
+        assert this.level != null;
+        if (this.level.getBlockEntity(this.getBlockPos().offset(this.insertDirection.getOpposite().getNormal())) instanceof ProcessMachineBlockEntity process) {
+            process.canInsert(this.insertDirection, stack);
+            process.setStackToDistribute(stack, this.insertDirection);
+        } else {
+            stack = this.insertIntoTunnel(this, this.insertDirection.getOpposite(), stack, false);
+            if (stack == null) stack = ItemStack.EMPTY;
+        }
+        return stack;
     }
 
     @Override

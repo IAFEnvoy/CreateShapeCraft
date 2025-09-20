@@ -43,21 +43,6 @@ public class CutProcessMachineBlockEntity extends ProcessMachineBlockEntity {
     }
 
     @Override
-    protected int getOutputStackCount() {
-        return 4;
-    }
-
-    @Override
-    protected ItemStack getOutputStack(int index) {
-        return this.outputs.get(index);
-    }
-
-    @Override
-    protected void setOutputStack(int index, ItemStack stack) {
-        this.outputs.set(index, stack);
-    }
-
-    @Override
     protected void process() {
         ShapeInfo info = this.inputStack.get(CSCDataComponents.SHAPE);
         if (this.inputStack.isEmpty() || info == null) return;
@@ -76,5 +61,10 @@ public class CutProcessMachineBlockEntity extends ProcessMachineBlockEntity {
             this.inputStack.shrink(1);
             this.setChanged();
         }
+    }
+
+    @Override
+    protected void distributeOutputs() {
+        this.outputs.replaceAll(this::distributeStack);
     }
 }

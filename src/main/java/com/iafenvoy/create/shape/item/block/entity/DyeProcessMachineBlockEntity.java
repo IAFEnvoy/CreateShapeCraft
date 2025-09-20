@@ -35,18 +35,14 @@ public class DyeProcessMachineBlockEntity extends ProcessMachineBlockEntity {
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
         behaviours.add(new DirectBeltInputBehaviour(this)
-                .onlyInsertWhen(this::isRightForDye)
+                .onlyInsertWhen(this::isSide)
                 .allowingBeltFunnels()
                 .setInsertionHandler(this::insertColor));
     }
 
-    private boolean isRightForDye(Direction dir) {
-        return dir.get2DDataValue() != -1;
-    }
-
     private ItemStack insertColor(TransportedItemStack stack, Direction side, boolean simulate) {
         ItemStack input = stack.stack.copy();
-        if (this.isRightForDye(side) && (this.dyeStack.isEmpty() || ItemStack.isSameItem(this.dyeStack, input)) && input.getItem() instanceof ShapeDyeItem) {
+        if (this.isSide(side) && (this.dyeStack.isEmpty() || ItemStack.isSameItem(this.dyeStack, input)) && input.getItem() instanceof ShapeDyeItem) {
             int remain = MAX_STACK_COUNT - this.dyeStack.getCount();
             int inserted = Math.min(input.getCount(), remain);
             if (!simulate) {
