@@ -40,7 +40,7 @@ public class StackProcessMachineBlockEntity extends ProcessMachineBlockEntity {
     }
 
     public ItemStack insertShape(TransportedItemStack stack, Direction side, boolean simulate) {
-        ItemStack input = stack.stack;
+        ItemStack input = stack.stack.copy();
         if (this.isSide(side) && (this.upperStack.isEmpty() || ItemStack.isSameItem(this.upperStack, input)) && input.has(CSCDataComponents.SHAPE)) {
             int remain = MAX_STACK_COUNT - this.upperStack.getCount();
             int inserted = Math.min(input.getCount(), remain);

@@ -25,7 +25,7 @@ public class ShapeItemRenderer extends BlockEntityWithoutLevelRenderer {
     @Override
     public void renderByItem(ItemStack stack, @NotNull ItemDisplayContext transformType, @NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer, int light, int overlay) {
         poseStack.pushPose();
-        poseStack.scale(0.5f, 0.5f, 0.5f);
+        poseStack.scale(0.5F, 0.5F, 0.5F);
         poseStack.translate(1, 0, 1);
         poseStack.mulPose(Axis.YP.rotationDegrees(90));
         ShapeInfo info = stack.get(CSCDataComponents.SHAPE);
@@ -34,7 +34,7 @@ public class ShapeItemRenderer extends BlockEntityWithoutLevelRenderer {
         for (int i = 0, layersSize = layers.size(); i < layersSize; i++) {
             ShapeInfo.Layer layer = layers.get(i);
             poseStack.pushPose();
-            float scale = 1 - i * 0.2F;
+            float scale = Math.max(0.1F, 0.9F - i * 0.22F);
             poseStack.scale(scale, scale, scale);
             ShapeInfo.Quarter.stream().map(x -> layer.parts().get(x)).forEach(x -> this.renderPart(poseStack, buffer, x, light, overlay));
             poseStack.popPose();

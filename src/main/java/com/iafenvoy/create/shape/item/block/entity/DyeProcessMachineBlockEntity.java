@@ -45,7 +45,7 @@ public class DyeProcessMachineBlockEntity extends ProcessMachineBlockEntity {
     }
 
     private ItemStack insertColor(TransportedItemStack stack, Direction side, boolean simulate) {
-        ItemStack input = stack.stack;
+        ItemStack input = stack.stack.copy();
         if (this.isRightForDye(side) && (this.dyeStack.isEmpty() || ItemStack.isSameItem(this.dyeStack, input)) && input.getItem() instanceof ShapeDyeItem) {
             int remain = MAX_STACK_COUNT - this.dyeStack.getCount();
             int inserted = Math.min(input.getCount(), remain);

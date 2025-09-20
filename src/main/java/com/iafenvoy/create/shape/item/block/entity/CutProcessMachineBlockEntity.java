@@ -18,7 +18,7 @@ import java.util.function.Function;
 
 public class CutProcessMachineBlockEntity extends ProcessMachineBlockEntity {
     private final Function<ShapeInfo, List<ShapeInfo>> processor;
-    protected NonNullList<ItemStack> outputs = NonNullList.withSize(4, ItemStack.EMPTY);
+    protected final NonNullList<ItemStack> outputs = NonNullList.withSize(4, ItemStack.EMPTY);
 
     public CutProcessMachineBlockEntity(BlockPos pos, BlockState state) {
         super(CSCBlockEntities.CUT_PROCESS_MACHINE.get(), pos, state);

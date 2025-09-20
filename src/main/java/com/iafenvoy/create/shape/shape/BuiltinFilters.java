@@ -19,7 +19,7 @@ public final class BuiltinFilters {
 
     public static ItemStack toFilterItem(List<ItemAttribute> attributes) {
         ItemStack stack = AllItems.ATTRIBUTE_FILTER.asStack();
-        stack.set(AllDataComponents.ATTRIBUTE_FILTER_WHITELIST_MODE, AttributeFilterWhitelistMode.WHITELIST_CONJ);
+        stack.set(AllDataComponents.ATTRIBUTE_FILTER_WHITELIST_MODE, AttributeFilterWhitelistMode.WHITELIST_DISJ);
         List<ItemAttribute.ItemAttributeEntry> entries = new ArrayList<>();
         attributes.forEach(attribute -> entries.add(new ItemAttribute.ItemAttributeEntry(attribute, false)));
         stack.set(AllDataComponents.ATTRIBUTE_FILTER_MATCHED_ATTRIBUTES, entries);
