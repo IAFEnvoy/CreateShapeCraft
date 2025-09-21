@@ -18,7 +18,7 @@ public class ShapeDestroyerBlock extends BaseEntityBlock {
     public static final MapCodec<ShapeDestroyerBlock> CODEC = simpleCodec(p -> new ShapeDestroyerBlock());
 
     public ShapeDestroyerBlock() {
-        super(Properties.ofFullCopy(Blocks.STONE));
+        super(Properties.ofFullCopy(Blocks.SMOOTH_STONE));
     }
 
     @Override

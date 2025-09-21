@@ -17,6 +17,8 @@ public final class CSCBlocks {
 
     public static final DeferredBlock<ShapeGeneratorBlock> SHAPE_GENERATOR = register("shape_generator", ShapeGeneratorBlock::new);
     public static final DeferredBlock<ShapeDestroyerBlock> SHAPE_DESTROYER = register("shape_destroyer", ShapeDestroyerBlock::new);
+    public static final DeferredBlock<ShapeStorageBlock> SHAPE_STORAGE = register("shape_storage", ShapeStorageBlock::new);
+
     public static final DeferredBlock<SingleProcessMachineBlock> ROTATOR_CW = register("rotator_cw", () -> new SingleProcessMachineBlock(ShapeProcessors::rotateClockwise));
     public static final DeferredBlock<SingleProcessMachineBlock> ROTATOR_CCW = register("rotator_ccw", () -> new SingleProcessMachineBlock(ShapeProcessors::rotateCounterclockwise));
     public static final DeferredBlock<SingleProcessMachineBlock> ROTATOR_180 = register("rotator_180", () -> new SingleProcessMachineBlock(ShapeProcessors::rotate180));

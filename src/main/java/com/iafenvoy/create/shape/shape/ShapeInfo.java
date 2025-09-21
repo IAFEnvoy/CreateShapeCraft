@@ -22,7 +22,7 @@ public record ShapeInfo(List<Layer> layers) {
     public static final String EMPTY_SLUG = "-", LAYER_SEPARATOR = ":";
     public static final Codec<ShapeInfo> CODEC = Codec.STRING.xmap(ShapeInfo::parse, ShapeInfo::toString);
     public static final StreamCodec<ByteBuf, ShapeInfo> STREAM_CODEC = ByteBufCodecs.STRING_UTF8.map(ShapeInfo::parse, ShapeInfo::toString);
-    public static final ShapeInfo DEFAULT = parse("CuCuCuCu");
+    public static final ShapeInfo EMPTY = parse(""), DEFAULT = parse("CuCuCuCu");
 
     public ShapeInfo(List<Layer> layers) {
         this.layers = layers.stream().filter(x -> !x.isEmpty()).toList();
@@ -47,6 +47,10 @@ public record ShapeInfo(List<Layer> layers) {
             if (!Objects.equals(this.layers.get(i), layers1.get(i)))
                 return false;
         return true;
+    }
+
+    public boolean isEmpty() {
+        return this == EMPTY || this.layers.isEmpty();
     }
 
     public record Layer(EnumMap<Quarter, Part> parts) {

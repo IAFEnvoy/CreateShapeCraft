@@ -11,27 +11,27 @@ public class InfiniteDestroyContainer implements IItemHandler {
     }
 
     @Override
-    public @NotNull ItemStack getStackInSlot(int i) {
+    public @NotNull ItemStack getStackInSlot(int slot) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public @NotNull ItemStack insertItem(int i, @NotNull ItemStack itemStack, boolean b) {
+    public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public @NotNull ItemStack extractItem(int i, int i1, boolean b) {
+    public @NotNull ItemStack extractItem(int slot, int count, boolean simulate) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public int getSlotLimit(int i) {
+    public int getSlotLimit(int slot) {
         return Integer.MAX_VALUE;
     }
 
     @Override
-    public boolean isItemValid(int i, @NotNull ItemStack itemStack) {
+    public boolean isItemValid(int slot, @NotNull ItemStack stack) {
         return true;
     }
 }

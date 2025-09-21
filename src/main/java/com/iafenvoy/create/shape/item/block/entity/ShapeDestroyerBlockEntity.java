@@ -2,9 +2,6 @@ package com.iafenvoy.create.shape.item.block.entity;
 
 import com.iafenvoy.create.shape.registry.CSCBlockEntities;
 import com.iafenvoy.create.shape.screen.container.InfiniteDestroyContainer;
-import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
-import com.simibubi.create.api.equipment.goggles.IHaveHoveringInformation;
-import com.simibubi.create.foundation.ICapabilityProvider;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
@@ -20,9 +17,8 @@ import net.neoforged.neoforge.items.IItemHandler;
 import java.util.List;
 
 @EventBusSubscriber
-public class ShapeDestroyerBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, IHaveHoveringInformation {
+public class ShapeDestroyerBlockEntity extends SmartBlockEntity {
     protected final InfiniteDestroyContainer container = new InfiniteDestroyContainer();
-    protected final ICapabilityProvider<IItemHandler> itemCapability = ICapabilityProvider.of(this.container);
 
     public ShapeDestroyerBlockEntity(BlockPos pos, BlockState blockState) {
         super(CSCBlockEntities.SHAPE_DESTROYER.get(), pos, blockState);
@@ -43,7 +39,7 @@ public class ShapeDestroyerBlockEntity extends SmartBlockEntity implements IHave
     }
 
     public IItemHandler getItemHandler() {
-        return this.itemCapability.getCapability();
+        return this.container;
     }
 
     @SubscribeEvent

@@ -1,12 +1,15 @@
 package com.iafenvoy.create.shape.screen.container;
 
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.common.util.INBTSerializable;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
 
-public class InfiniteProvideContainer implements IItemHandler {
+public class InfiniteProvideContainer implements IItemHandler, INBTSerializable<CompoundTag> {
     private final int maxCountPerTime;
     private final Predicate<ItemStack> allowed;
     private ItemStack provided = ItemStack.EMPTY;
@@ -30,27 +33,39 @@ public class InfiniteProvideContainer implements IItemHandler {
     }
 
     @Override
-    public @NotNull ItemStack getStackInSlot(int i) {
-        return this.provided.copyWithCount(this.getSlotLimit(i));
+    public @NotNull ItemStack getStackInSlot(int slot) {
+        return this.provided.copyWithCount(this.getSlotLimit(slot));
     }
 
     @Override
-    public @NotNull ItemStack insertItem(int i, @NotNull ItemStack itemStack, boolean b) {
-        return itemStack;
+    public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+        return stack;
     }
 
     @Override
-    public @NotNull ItemStack extractItem(int i, int i1, boolean b) {
-        return this.getStackInSlot(i);
+    public @NotNull ItemStack extractItem(int slot, int count, boolean simulate) {
+        return this.getStackInSlot(slot);
     }
 
     @Override
-    public int getSlotLimit(int i) {
+    public int getSlotLimit(int slot) {
         return this.maxCountPerTime;
     }
 
     @Override
-    public boolean isItemValid(int i, @NotNull ItemStack itemStack) {
+    public boolean isItemValid(int slot, @NotNull ItemStack stack) {
         return false;
+    }
+
+    @Override
+    public CompoundTag serializeNBT(@NotNull HolderLookup.Provider registries) {
+        CompoundTag tag = new CompoundTag();
+        tag.put("provided", this.getProvided().saveOptional(registries));
+        return tag;
+    }
+
+    @Override
+    public void deserializeNBT(@NotNull HolderLookup.Provider registries, @NotNull CompoundTag tag) {
+        this.setProvided(ItemStack.parseOptional(registries, tag.getCompound("provided")));
     }
 }

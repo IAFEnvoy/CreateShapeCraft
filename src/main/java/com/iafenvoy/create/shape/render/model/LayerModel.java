@@ -17,12 +17,12 @@ public class LayerModel extends EntityModel<Entity> {
     }
 
     public static LayerDefinition createBodyLayer() {
-        MeshDefinition meshdefinition = new MeshDefinition();
-        PartDefinition partdefinition = meshdefinition.getRoot();
-        partdefinition.addOrReplaceChild("root", CubeListBuilder.create()
+        MeshDefinition mesh = new MeshDefinition();
+        PartDefinition part = mesh.getRoot();
+        part.addOrReplaceChild("root", CubeListBuilder.create()
                         .texOffs(0, 0).addBox(0, 0, 0, 16, 0.01F, 16, new CubeDeformation(0)),
                 PartPose.offset(0, 0, 0));
-        return LayerDefinition.create(meshdefinition, 16, 16);
+        return LayerDefinition.create(mesh, 16, 16);
     }
 
     @Override
