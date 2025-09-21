@@ -84,4 +84,9 @@ public class StackProcessMachineBlockEntity extends ProcessMachineBlockEntity {
             this.setChanged();
         }
     }
+
+    @Override
+    protected List<ItemStack> grabInputs() {
+        return List.of(this.inputStack, this.upperStack);
+    }
 }

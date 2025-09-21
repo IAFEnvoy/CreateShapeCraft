@@ -1,10 +1,10 @@
 {
-  "parent": "create:block/belt_tunnel/straight",
+  "parent": "create:block/belt_tunnel/item",
   "textures": {
     "direction": "create_shape_craft:block/machine_direction",
     "frame": "create_shape_craft:block/machine_frame",
     "particle": "create_shape_craft:block/machine_base",
-    "top": "create_shape_craft:block/cutter_horizontal",
+    "top": "create_shape_craft:block/rotator_180",
     "tunnel": "create_shape_craft:block/machine_tunnel"
   }
 }

@@ -1,17 +1,18 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
-import com.iafenvoy.create.shape.registry.CSCBlockEntities;
 import com.iafenvoy.create.shape.item.container.ShapeStorageContainer;
+import com.iafenvoy.create.shape.registry.CSCBlockEntities;
 import com.iafenvoy.create.shape.shape.ShapeInfo;
+import com.iafenvoy.create.shape.util.TextUtil;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import joptsimple.internal.Strings;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -48,9 +49,8 @@ public class ShapeStorageBlockEntity extends SmartBlockEntity implements IHaveGo
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         ShapeInfo info = this.container.getInfo();
-        tooltip.add(Component.empty());
-        tooltip.add(Component.literal(info.isEmpty() || this.container.getCount() == 0 ? "Empty" : info.toString()));
-        tooltip.add(Component.literal("%s/%s".formatted(this.container.getCount(), this.container.getMaxCount())));
+        tooltip.add(Component.literal(Strings.repeat(' ', TextUtil.getIndents(Minecraft.getInstance().font, 4))).append(Component.literal(info.isEmpty() || this.container.getCount() == 0 ? "Empty" : info.toString())));
+        tooltip.add(Component.literal(Strings.repeat(' ', TextUtil.getIndents(Minecraft.getInstance().font, 4))).append(Component.literal("%s/%s".formatted(this.container.getCount(), this.container.getMaxCount()))));
         return true;
     }
 

@@ -7,12 +7,15 @@ import com.simibubi.create.content.logistics.funnel.BeltFunnelBlock;
 import com.simibubi.create.content.logistics.tunnel.BeltTunnelBlock;
 import com.simibubi.create.content.logistics.tunnel.BrassTunnelBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.animation.LerpedFloat;
 import net.createmod.catnip.data.Iterate;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -157,5 +160,29 @@ public abstract class ProcessMachineBlockEntity extends BrassTunnelBlockEntity {
 
     public boolean isSide(Direction dir) {
         return dir.get2DDataValue() != -1;
+    }
+
+    protected List<ItemStack> grabInputs() {
+        return List.of(this.inputStack);
+    }
+
+    protected List<ItemStack> grabOutputs() {
+        return List.of(this.outputStack);
+    }
+
+    @Override
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        List<ItemStack> inputs = this.grabInputs(), outputs = this.grabOutputs();
+        if (!inputs.isEmpty()) {
+            CreateLang.translate("tooltip.machine.input").style(ChatFormatting.WHITE).forGoggles(tooltip);
+            for (ItemStack stack : inputs)
+                CreateLang.translate("tooltip.brass_tunnel.contains_entry", Component.translatable(stack.getDescriptionId()).getString(), stack.getCount()).style(ChatFormatting.GRAY).forGoggles(tooltip);
+        }
+        if (!outputs.isEmpty()) {
+            CreateLang.translate("tooltip.machine.output").style(ChatFormatting.WHITE).forGoggles(tooltip);
+            for (ItemStack stack : outputs)
+                CreateLang.translate("tooltip.brass_tunnel.contains_entry", Component.translatable(stack.getDescriptionId()).getString(), stack.getCount()).style(ChatFormatting.GRAY).forGoggles(tooltip);
+        }
+        return true;
     }
 }

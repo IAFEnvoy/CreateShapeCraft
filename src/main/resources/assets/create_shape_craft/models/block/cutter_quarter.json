@@ -4,7 +4,7 @@
     "direction": "create_shape_craft:block/machine_direction",
     "frame": "create_shape_craft:block/machine_frame",
     "particle": "create_shape_craft:block/machine_base",
-    "top": "create_shape_craft:block/cutter",
+    "top": "create_shape_craft:block/cutter_quarter",
     "tunnel": "create_shape_craft:block/machine_tunnel"
   }
 }

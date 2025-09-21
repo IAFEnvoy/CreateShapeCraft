@@ -3,6 +3,7 @@ package com.iafenvoy.create.shape.item.block.entity;
 import com.iafenvoy.create.shape.item.ShapeItem;
 import com.iafenvoy.create.shape.item.block.CutProcessMachineBlock;
 import com.iafenvoy.create.shape.registry.CSCBlockEntities;
+import com.iafenvoy.create.shape.registry.CSCBlocks;
 import com.iafenvoy.create.shape.registry.CSCDataComponents;
 import com.iafenvoy.create.shape.shape.ShapeInfo;
 import net.minecraft.core.BlockPos;
@@ -66,5 +67,10 @@ public class CutProcessMachineBlockEntity extends ProcessMachineBlockEntity {
     @Override
     protected void distributeOutputs() {
         this.outputs.replaceAll(this::distributeStack);
+    }
+
+    @Override
+    protected List<ItemStack> grabOutputs() {
+        return this.getBlockState().is(CSCBlocks.CUTTER_QUARTER) ? this.outputs : this.outputs.subList(0, 2);
     }
 }

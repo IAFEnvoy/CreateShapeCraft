@@ -85,4 +85,9 @@ public class DyeProcessMachineBlockEntity extends ProcessMachineBlockEntity {
             this.setChanged();
         }
     }
+
+    @Override
+    protected List<ItemStack> grabInputs() {
+        return List.of(this.inputStack, this.dyeStack);
+    }
 }
