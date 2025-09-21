@@ -11,6 +11,7 @@ This mod is inspired by the game [ShapeZ](https://shapez.io/).
 ### Shapes
 
 <div align=center><img src="https://raw.githubusercontent.com/IAFEnvoy/CreateShapeCraft/refs/heads/master/img/2.webp" style="width:400px;text-align:center;" alt=""></img></div>
+
 Shape is the basic unit for processing. 
 
 Each shape have a unique key which is same with ones in ShapeZ. You can use [Shape Generator](https://viewer.shapez.io/)
@@ -19,6 +20,7 @@ to create and view shapes. In-game you can use `/shape <key>` to grant specific 
 ### Processing Machines
 
 <div align=center><img src="https://raw.githubusercontent.com/IAFEnvoy/CreateShapeCraft/refs/heads/master/img/3.webp" style="width:400px;text-align:center;" alt=""></img></div>
+
 - Shape Generator
 - Shape Destroyer
 - Shape Storage
