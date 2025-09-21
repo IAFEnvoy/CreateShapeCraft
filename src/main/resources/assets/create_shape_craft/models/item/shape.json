@@ -1,6 +1,9 @@
 {
 	"parent": "minecraft:builtin/entity",
 	"gui_light": "front",
+	"textures": {
+		"particle": "create_shape_craft:item/shape/rectangle_inner.png"
+	},
 	"display": {
 		"thirdperson_righthand": {
 			"rotation": [72.97, 0.21, 5.16],

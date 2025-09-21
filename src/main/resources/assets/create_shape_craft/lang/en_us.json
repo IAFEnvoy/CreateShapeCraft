@@ -8,6 +8,7 @@
   "block.create_shape_craft.rotator_cw": "Clockwise Rotator",
   "block.create_shape_craft.shape_destroyer": "Shape Destroyer",
   "block.create_shape_craft.shape_generator": "Shape Generator",
+  "block.create_shape_craft.shape_storage": "Shape Storage",
   "block.create_shape_craft.stacker": "Shape Stacker",
   "create.item_attributes.shape_key": "shape key is: %s",
   "create.item_attributes.shape_layer_count": "shape layer count is: %s",

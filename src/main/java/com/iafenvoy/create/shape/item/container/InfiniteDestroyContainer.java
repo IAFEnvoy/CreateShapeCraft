@@ -1,4 +1,4 @@
-package com.iafenvoy.create.shape.screen.container;
+package com.iafenvoy.create.shape.item.container;
 
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;

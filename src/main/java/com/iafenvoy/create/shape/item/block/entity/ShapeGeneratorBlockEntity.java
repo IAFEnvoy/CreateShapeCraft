@@ -2,7 +2,7 @@ package com.iafenvoy.create.shape.item.block.entity;
 
 import com.iafenvoy.create.shape.item.block.slot.ShapeGeneratorFilterSlot;
 import com.iafenvoy.create.shape.registry.CSCBlockEntities;
-import com.iafenvoy.create.shape.screen.container.InfiniteProvideContainer;
+import com.iafenvoy.create.shape.item.container.InfiniteProvideContainer;
 import com.iafenvoy.create.shape.util.Predicates;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -10,7 +10,6 @@ import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringB
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

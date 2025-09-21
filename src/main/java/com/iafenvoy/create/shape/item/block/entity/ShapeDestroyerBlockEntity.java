@@ -1,7 +1,7 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
 import com.iafenvoy.create.shape.registry.CSCBlockEntities;
-import com.iafenvoy.create.shape.screen.container.InfiniteDestroyContainer;
+import com.iafenvoy.create.shape.item.container.InfiniteDestroyContainer;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;

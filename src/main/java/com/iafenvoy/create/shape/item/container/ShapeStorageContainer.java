@@ -1,8 +1,9 @@
-package com.iafenvoy.create.shape.screen.container;
+package com.iafenvoy.create.shape.item.container;
 
 import com.iafenvoy.create.shape.item.ShapeItem;
 import com.iafenvoy.create.shape.registry.CSCDataComponents;
 import com.iafenvoy.create.shape.shape.ShapeInfo;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -14,13 +15,27 @@ import org.jetbrains.annotations.UnknownNullability;
 import java.util.Objects;
 
 public class ShapeStorageContainer implements IItemHandler, INBTSerializable<CompoundTag> {
+    private final SmartBlockEntity blockEntity;
     private final int maxCount;
     @NotNull
     private ShapeInfo info = ShapeInfo.EMPTY;
-    private int count;
+    private int count = 0;
 
-    public ShapeStorageContainer(int maxCount) {
+    public ShapeStorageContainer(SmartBlockEntity blockEntity, int maxCount) {
+        this.blockEntity = blockEntity;
         this.maxCount = maxCount;
+    }
+
+    public int getMaxCount() {
+        return this.maxCount;
+    }
+
+    public @NotNull ShapeInfo getInfo() {
+        return this.info;
+    }
+
+    public int getCount() {
+        return this.count;
     }
 
     @Override
@@ -30,7 +45,7 @@ public class ShapeStorageContainer implements IItemHandler, INBTSerializable<Com
 
     @Override
     public @NotNull ItemStack getStackInSlot(int slot) {
-        return ShapeItem.fromInfo(info).copyWithCount(Math.min(this.count, 64));
+        return ShapeItem.fromInfo(this.info).copyWithCount(Math.min(this.count, 64));
     }
 
     @Override
@@ -39,21 +54,26 @@ public class ShapeStorageContainer implements IItemHandler, INBTSerializable<Com
         if (this.info.isEmpty() || this.count == 0)
             this.info = Objects.requireNonNullElse(stack.get(CSCDataComponents.SHAPE), ShapeInfo.EMPTY);
         int transferred = Math.min(this.maxCount - this.count, stack.getCount());
-        if (!simulate) this.count += transferred;
-        stack.shrink(transferred);
-        return stack;
+        if (!simulate) {
+            this.count += transferred;
+            this.blockEntity.notifyUpdate();
+        }
+        return stack.copyWithCount(stack.getCount() - transferred);
     }
 
     @Override
     public @NotNull ItemStack extractItem(int slot, int count, boolean simulate) {
-        int transferred = Math.max(0, this.count - count);
-        if (!simulate) this.count -= transferred;
-        return ShapeItem.fromInfo(info).copyWithCount(transferred);
+        int transferred = Math.min(this.count, count);
+        if (!simulate) {
+            this.count -= transferred;
+            this.blockEntity.notifyUpdate();
+        }
+        return ShapeItem.fromInfo(this.info).copyWithCount(transferred);
     }
 
     @Override
     public int getSlotLimit(int slot) {
-        return this.maxCount;
+        return 64;
     }
 
     @Override

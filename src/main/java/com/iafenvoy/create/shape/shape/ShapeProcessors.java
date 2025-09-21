@@ -6,6 +6,7 @@ import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 /*
  * Basic processing machines in ShapeZ
@@ -30,26 +31,26 @@ import java.util.Optional;
 public final class ShapeProcessors {
     //Cutter
     public static List<ShapeInfo> cutVertical(ShapeInfo info) {
-        return List.of(
+        return Stream.of(
                 new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.BOTTOM_LEFT, ShapeInfo.Quarter.TOP_LEFT)).toList()),
                 new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.TOP_RIGHT, ShapeInfo.Quarter.BOTTOM_RIGHT)).toList())
-        );
+        ).filter(x -> !x.isEmpty()).toList();
     }
 
     public static List<ShapeInfo> cutHorizontal(ShapeInfo info) {
-        return List.of(
+        return Stream.of(
                 new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.TOP_RIGHT, ShapeInfo.Quarter.TOP_LEFT)).toList()),
                 new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.BOTTOM_RIGHT, ShapeInfo.Quarter.BOTTOM_LEFT)).toList())
-        );
+        ).filter(x -> !x.isEmpty()).toList();
     }
 
     public static List<ShapeInfo> cutQuarter(ShapeInfo info) {
-        return List.of(
+        return Stream.of(
                 new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.TOP_RIGHT)).toList()),
                 new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.BOTTOM_RIGHT)).toList()),
                 new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.BOTTOM_LEFT)).toList()),
                 new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.TOP_LEFT)).toList())
-        );
+        ).filter(x -> !x.isEmpty()).toList();
     }
 
     //Rotator

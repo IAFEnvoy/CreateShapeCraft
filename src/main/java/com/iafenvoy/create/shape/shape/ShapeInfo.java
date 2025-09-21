@@ -136,11 +136,11 @@ public record ShapeInfo(List<Layer> layers) {
         }
 
         public ResourceLocation getBorderTexture() {
-            return ResourceLocation.tryBuild(CreateShapeCraft.MOD_ID, "textures/shape/%s_border.png".formatted(this.texture));
+            return ResourceLocation.tryBuild(CreateShapeCraft.MOD_ID, "textures/item/shape/%s_border.png".formatted(this.texture));
         }
 
         public ResourceLocation getInnerTexture() {
-            return ResourceLocation.tryBuild(CreateShapeCraft.MOD_ID, "textures/shape/%s_inner.png".formatted(this.texture));
+            return ResourceLocation.tryBuild(CreateShapeCraft.MOD_ID, "textures/item/shape/%s_inner.png".formatted(this.texture));
         }
 
         public String getSlug() {

@@ -6,9 +6,11 @@ import com.iafenvoy.create.shape.render.item.ShapeItemRenderer;
 import com.iafenvoy.create.shape.shape.ShapeInfo;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,6 +27,13 @@ public class ShapeItem extends Item {
         super.appendHoverText(stack, context, components, flag);
         ShapeInfo info = stack.get(CSCDataComponents.SHAPE);
         if (info != null) components.add(Component.literal(info.toString()));
+    }
+
+    @Override
+    public void inventoryTick(@NotNull ItemStack stack, @NotNull Level level, @NotNull Entity entity, int slotId, boolean isSelected) {
+        super.inventoryTick(stack, level, entity, slotId, isSelected);
+        ShapeInfo info = stack.get(CSCDataComponents.SHAPE);
+        if (info == null || info.isEmpty()) stack.setCount(0);//Remove empty
     }
 
     @SuppressWarnings("removal")
