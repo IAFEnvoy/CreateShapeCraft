@@ -33,7 +33,7 @@ public record ShapePartEmptyAttribute(ShapeInfo.Quarter quarter, boolean empty) 
     @Override
     public boolean appliesTo(ItemStack stack, Level world) {
         ShapeInfo info = stack.get(CSCDataComponents.SHAPE);
-        return info != null && info.layers().stream().allMatch(x -> x.parts().get(this.quarter).isEmpty() == this.empty);
+        return info != null && info.layers().stream().allMatch(x -> x.parts().get(this.quarter).isEmpty()) == this.empty;
     }
 
     @Override

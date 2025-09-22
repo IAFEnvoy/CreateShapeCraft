@@ -9,7 +9,7 @@
   "block.create_shape_craft.shape_destroyer": "Shape Destroyer",
   "block.create_shape_craft.shape_generator": "Shape Generator",
   "block.create_shape_craft.shape_storage": "Shape Storage",
-  "block.create_shape_craft.stacker": "Shape Stacker",
+  "block.create_shape_craft.stacker": "Stacker",
   "command.create_shape_craft.need_creative": "You need to be in the creative mode to use this command!",
   "create.item_attributes.shape_key": "shape key is: %s",
   "create.item_attributes.shape_layer_count": "shape layer count is: %s",
