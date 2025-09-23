@@ -29,6 +29,8 @@ to create and view shapes. In-game you can use `/shape <key>` to grant specific 
 - Stacker
 - Cutter (Horizontal/Vertical/Quarter)
 
+Check out how to use in-game with Ponder.
+
 ## Future plan
 
 - Better Shape Renderer (Include Goggles Tooltip)

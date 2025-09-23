@@ -232,24 +232,24 @@ public class MachineStoryBoards {
         sb.idle(10);
         sb.world().cycleBlockProperty(new BlockPos(2, 2, 2), BeltBlock.CASING);
         sb.world().cycleBlockProperty(new BlockPos(2, 2, 3), BeltBlock.CASING);
-        sb.overlay().showText(50)
+        sb.overlay().showText(70)
                 .attachKeyFrame()
                 .text("We can use brass tunnels and attribute filters to split them out.");
-        Vec3 filter1 = getTunnelFilterVec(new BlockPos(2, 2, 2), Direction.WEST);
+        Vec3 filter1 = getTunnelFilterVec(new BlockPos(2, 2, 2));
         sb.overlay().showFilterSlotInput(filter1, Direction.WEST, 50);
-        sb.overlay().showText(50)
+        sb.overlay().showText(70)
                 .attachKeyFrame()
                 .text("Bottom right is not empty")
                 .placeNearTarget()
                 .pointAt(filter1);
-        Vec3 filter2 = getTunnelFilterVec(new BlockPos(2, 2, 3), Direction.WEST);
+        Vec3 filter2 = getTunnelFilterVec(new BlockPos(2, 2, 3));
         sb.overlay().showFilterSlotInput(filter2, Direction.WEST, 50);
-        sb.overlay().showText(50)
+        sb.overlay().showText(70)
                 .attachKeyFrame()
                 .text("Top left is not empty")
                 .placeNearTarget()
                 .pointAt(filter2);
-        sb.idle(60);
+        sb.idle(80);
         ItemStack stack2 = ShapeItem.fromInfo(example);
         sb.world().createItemOnBelt(util.grid().at(4, 1, 3), Direction.EAST, stack2);
         sb.overlay().showControls(new Vec3(5.5, 2, 3.5), Pointing.DOWN, 70).withItem(stack2);
@@ -296,25 +296,33 @@ public class MachineStoryBoards {
                 .placeNearTarget()
                 .pointAt(util.vector().blockSurface(new BlockPos(3, 2, 6), Direction.UP));
         sb.idle(60);
+        sb.rotateCameraY(-45);
+        sb.idle(20);
         sb.world().createItemOnBelt(util.grid().at(5, 1, 0), Direction.EAST, stack.copy());
-        sb.overlay().showControls(new Vec3(5.5, 2, 0.5), Pointing.DOWN, 70).withItem(stack);
+        sb.overlay().showControls(new Vec3(5.5, 2, 0.5), Pointing.DOWN, 150).withItem(stack);
+        sb.idle(20);
+        sb.overlay().showControls(new Vec3(0.5, 2, 0.5), Pointing.DOWN, 130).withItem(ShapeItem.fromInfo(horizontal.getFirst()));
+        sb.overlay().showControls(new Vec3(0.5, 2, 1.5), Pointing.DOWN, 130).withItem(ShapeItem.fromInfo(horizontal.getLast()));
+        sb.idle(20);
         sb.world().createItemOnBelt(util.grid().at(5, 1, 3), Direction.EAST, stack.copy());
-        sb.overlay().showControls(new Vec3(5.5, 2, 3.5), Pointing.DOWN, 70).withItem(stack);
+        sb.overlay().showControls(new Vec3(5.5, 2, 3.5), Pointing.DOWN, 110).withItem(stack);
+        sb.idle(20);
+        sb.overlay().showControls(new Vec3(0.5, 2, 3.5), Pointing.DOWN, 90).withItem(ShapeItem.fromInfo(vertical.getFirst()));
+        sb.overlay().showControls(new Vec3(0.5, 2, 4.5), Pointing.DOWN, 90).withItem(ShapeItem.fromInfo(vertical.getLast()));
+        sb.idle(20);
         sb.world().createItemOnBelt(util.grid().at(5, 1, 6), Direction.EAST, stack.copy());
         sb.overlay().showControls(new Vec3(5.5, 2, 6.5), Pointing.DOWN, 70).withItem(stack);
         sb.idle(20);
-        sb.overlay().showControls(new Vec3(0.5, 2, 0.5), Pointing.DOWN, 50).withItem(ShapeItem.fromInfo(horizontal.getFirst()));
-        sb.overlay().showControls(new Vec3(0.5, 2, 1.5), Pointing.DOWN, 50).withItem(ShapeItem.fromInfo(horizontal.getLast()));
-        sb.overlay().showControls(new Vec3(0.5, 2, 3.5), Pointing.DOWN, 50).withItem(ShapeItem.fromInfo(vertical.getFirst()));
-        sb.overlay().showControls(new Vec3(0.5, 2, 4.5), Pointing.DOWN, 50).withItem(ShapeItem.fromInfo(vertical.getLast()));
         sb.overlay().showControls(new Vec3(0.5, 2, 6.5), Pointing.DOWN, 50).withItem(ShapeItem.fromInfo(quarter.getFirst()));
         sb.overlay().showControls(new Vec3(0.5, 2, 7.5), Pointing.DOWN, 50).withItem(ShapeItem.fromInfo(quarter.get(1)));
         sb.overlay().showControls(new Vec3(0.5, 2, 8.5), Pointing.DOWN, 50).withItem(ShapeItem.fromInfo(quarter.get(2)));
         sb.overlay().showControls(new Vec3(0.5, 2, 9.5), Pointing.DOWN, 50).withItem(ShapeItem.fromInfo(quarter.get(3)));
         sb.idle(60);
+        sb.rotateCameraY(45);
+        sb.idle(20);
     }
 
-    private static Vec3 getTunnelFilterVec(BlockPos pos, Direction d) {
-        return VecHelper.getCenterOf(pos).add(Vec3.atLowerCornerOf(d.getNormal()).scale(.5)).add(0, 0.3, 0);
+    private static Vec3 getTunnelFilterVec(BlockPos pos) {
+        return VecHelper.getCenterOf(pos).add(Vec3.atLowerCornerOf(Direction.WEST.getNormal()).scale(.5)).add(0, 0.3, 0);
     }
 }
