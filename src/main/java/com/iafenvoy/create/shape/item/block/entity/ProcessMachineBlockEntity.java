@@ -1,15 +1,14 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
 import com.iafenvoy.create.shape.item.ShapeDyeItem;
+import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
-import com.simibubi.create.content.logistics.funnel.BeltFunnelBlock;
 import com.simibubi.create.content.logistics.tunnel.BeltTunnelBlock;
 import com.simibubi.create.content.logistics.tunnel.BrassTunnelBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.animation.LerpedFloat;
-import net.createmod.catnip.data.Iterate;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -90,13 +89,7 @@ public abstract class ProcessMachineBlockEntity extends BrassTunnelBlockEntity {
         //Process flaps only
         this.flaps.clear();
         if (this.level == null) return;
-        for (Direction direction : Iterate.horizontalDirections) {
-            BlockState nextState = this.level.getBlockState(this.worldPosition.relative(direction));
-            if (nextState.getBlock() instanceof BeltTunnelBlock) continue;
-            if (nextState.getBlock() instanceof BeltFunnelBlock && nextState.getValue(BeltFunnelBlock.SHAPE) == BeltFunnelBlock.Shape.EXTENDED && nextState.getValue(BeltFunnelBlock.HORIZONTAL_FACING) == direction.getOpposite())
-                continue;
-            this.flaps.put(direction, this.createChasingFlap());
-        }
+        Direction.stream().filter(x -> x.getAxis() == this.getBlockState().getValue(BeltTunnelBlock.HORIZONTAL_AXIS)).forEach(dir -> this.flaps.put(dir, this.createChasingFlap()));
         this.sendData();
     }
 

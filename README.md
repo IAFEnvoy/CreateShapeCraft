@@ -31,7 +31,6 @@ to create and view shapes. In-game you can use `/shape <key>` to grant specific 
 
 ## Future plan
 
-- Ponder Scenes
 - Better Shape Renderer (Include Goggles Tooltip)
 - Craftable in Survival Mode
 
