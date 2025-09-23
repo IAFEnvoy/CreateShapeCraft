@@ -36,6 +36,16 @@ Check out how to use in-game with Ponder.
 - Better Shape Renderer (Include Goggles Tooltip)
 - Craftable in Survival Mode
 
+## FAQ
+
+### Will electric layer be added?
+
+I already have this idea, but I think integrate with redstone is a better idea.
+
+### Will this mod backport?
+
+Sadly I have no interest in porting to 1.20.1 or other previous version since Forge APIs are mess.
+
 ## Licensing
 
 The ShapeZ's license is GPL-3.0, so this mod's license is LGPL-3.0. But all original assets are ARR.
