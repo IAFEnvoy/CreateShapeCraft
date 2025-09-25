@@ -8,26 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-/*
- * Basic processing machines in ShapeZ
- * 1.Belt (Provided by Create)
- * 2.Combiner&Separator (Provided by Create)
- * 3.Tunnel (Useless in 3D game)
- * 4.Shape Generator (Implemented by block)
- * 5.Cutter (half&quarter)
- * 6.Rotator (90&180&270)
- * 7.Stacker
- * 8.Color mixer (Provided by vanilla)
- * 9.Dyer
- * 0.Shape Destroyer (Implemented by block)
- *
- * Functional machines
- * 1.Storage (Implemented by block)
- * 2.Counter (Implemented by block)
- * 3.Switch (Provided by Create)
- * 4.Filter (Provided by Create)
- * 5.Screen (Useless)
- * */
 public final class ShapeProcessors {
     //Cutter
     public static List<ShapeInfo> cutVertical(ShapeInfo info) {
