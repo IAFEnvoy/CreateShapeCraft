@@ -1,12 +1,12 @@
 package com.iafenvoy.create.shape.ponder;
 
 import com.iafenvoy.create.shape.item.ShapeItem;
-import com.iafenvoy.create.shape.registry.CSCItems;
 import com.iafenvoy.create.shape.shape.BuiltinFilters;
 import com.iafenvoy.create.shape.shape.ShapeInfo;
 import com.iafenvoy.create.shape.shape.ShapeProcessors;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
+import com.simibubi.create.content.kinetics.simpleRelays.CogWheelBlock;
 import com.simibubi.create.content.logistics.tunnel.BrassTunnelBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.SidedFilteringBehaviour;
 import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
@@ -17,8 +17,11 @@ import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.createmod.ponder.api.scene.Selection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
+import plus.dragons.createdragonsplus.common.registry.CDPFluids;
 
 import java.util.List;
 
@@ -106,30 +109,31 @@ public class MachineStoryBoards {
         //Introduce
         sb.overlay().showText(50)
                 .attachKeyFrame()
-                .text("The dyer dyes the whole shape with shape dyes.")
+                .text("The dyer dyes the whole shape with dye fluid.")
                 .placeNearTarget()
                 .pointAt(util.vector().blockSurface(new BlockPos(2, 2, 2), Direction.WEST));
         sb.idle(60);
-        sb.world().showSection(util.select().fromTo(0, 1, 3, 2, 2, 4), Direction.NORTH);
-        sb.idle(10);
         sb.overlay().showText(50)
                 .attachKeyFrame()
                 .text("Base shapes insert from sides of the machine.")
                 .placeNearTarget()
                 .pointAt(util.vector().blockSurface(new BlockPos(3, 1, 2), Direction.UP));
         sb.idle(60);
+        sb.world().showSection(util.select().fromTo(0, 1, 3, 2, 2, 4), Direction.NORTH);
+        sb.idle(10);
         sb.overlay().showText(50)
                 .attachKeyFrame()
-                .text("Shape dyes can only insert into the top of the machine.")
+                .text("Dye Fluid can insert from any side.")
                 .placeNearTarget()
-                .pointAt(util.vector().blockSurface(new BlockPos(2, 2, 2), Direction.UP));
+                .pointAt(util.vector().blockSurface(new BlockPos(0, 2, 4), Direction.UP));
         sb.idle(60);
+        sb.world().setBlock(new BlockPos(2, 1, 3), AllBlocks.COGWHEEL.getDefaultState().setValue(CogWheelBlock.AXIS, Direction.Axis.Z), false);
+        sb.world().showIndependentSection(util.select().position(3, 1, 2), Direction.NORTH);
         //Example
-        ItemStack shapeStack = ShapeItem.fromInfo(example), dyeStack = CSCItems.RED_SHAPE_DYE.toStack();
+        ItemStack shapeStack = ShapeItem.fromInfo(example);
         sb.world().createItemOnBelt(util.grid().at(4, 1, 2), Direction.EAST, shapeStack);
         sb.overlay().showControls(new Vec3(4.5, 2, 2.5), Pointing.DOWN, 50).withItem(shapeStack);
-        sb.world().createItemOnBelt(util.grid().at(2, 2, 4), Direction.SOUTH, dyeStack);
-        sb.overlay().showControls(new Vec3(2.5, 3, 4.5), Pointing.DOWN, 50).withItem(dyeStack);
+        sb.overlay().showControls(new Vec3(0.5, 3, 4.5), Pointing.DOWN, 50).withItem(CDPFluids.DYES_BY_COLOR.get(DyeColor.RED).getBucket().orElse(Items.AIR).getDefaultInstance());
         sb.idle(20);
         sb.overlay().showControls(new Vec3(0.5, 2, 2.5), Pointing.DOWN, 30).withItem(ShapeItem.fromInfo(ShapeProcessors.color(example, ShapeInfo.Color.RED)));
         sb.idle(40);

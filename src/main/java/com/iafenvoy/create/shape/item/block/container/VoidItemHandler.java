@@ -1,10 +1,10 @@
-package com.iafenvoy.create.shape.item.container;
+package com.iafenvoy.create.shape.item.block.container;
 
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class InfiniteDestroyContainer implements IItemHandler {
+public class VoidItemHandler implements IItemHandler {
     @Override
     public int getSlots() {
         return 1;

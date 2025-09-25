@@ -1,6 +1,6 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
-import com.iafenvoy.create.shape.item.container.ShapeStorageContainer;
+import com.iafenvoy.create.shape.item.block.container.ShapeStorageItemHandler;
 import com.iafenvoy.create.shape.registry.CSCBlockEntities;
 import com.iafenvoy.create.shape.shape.ShapeInfo;
 import com.iafenvoy.create.shape.util.TextUtil;
@@ -24,7 +24,7 @@ import java.util.List;
 
 @EventBusSubscriber
 public class ShapeStorageBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
-    protected final ShapeStorageContainer container = new ShapeStorageContainer(this, 65536);
+    protected final ShapeStorageItemHandler container = new ShapeStorageItemHandler(this, 65536);
 
     public ShapeStorageBlockEntity(BlockPos pos, BlockState blockState) {
         super(CSCBlockEntities.SHAPE_STORAGE.get(), pos, blockState);

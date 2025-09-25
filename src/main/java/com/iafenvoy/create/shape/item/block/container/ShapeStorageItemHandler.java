@@ -1,4 +1,4 @@
-package com.iafenvoy.create.shape.item.container;
+package com.iafenvoy.create.shape.item.block.container;
 
 import com.iafenvoy.create.shape.item.ShapeItem;
 import com.iafenvoy.create.shape.registry.CSCDataComponents;
@@ -14,14 +14,14 @@ import org.jetbrains.annotations.UnknownNullability;
 
 import java.util.Objects;
 
-public class ShapeStorageContainer implements IItemHandler, INBTSerializable<CompoundTag> {
+public class ShapeStorageItemHandler implements IItemHandler, INBTSerializable<CompoundTag> {
     private final SmartBlockEntity blockEntity;
     private final int maxCount;
     @NotNull
     private ShapeInfo info = ShapeInfo.EMPTY;
     private int count = 0;
 
-    public ShapeStorageContainer(SmartBlockEntity blockEntity, int maxCount) {
+    public ShapeStorageItemHandler(SmartBlockEntity blockEntity, int maxCount) {
         this.blockEntity = blockEntity;
         this.maxCount = maxCount;
     }

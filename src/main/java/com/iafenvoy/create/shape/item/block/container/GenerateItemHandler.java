@@ -1,4 +1,4 @@
-package com.iafenvoy.create.shape.item.container;
+package com.iafenvoy.create.shape.item.block.container;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -9,12 +9,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
 
-public class InfiniteProvideContainer implements IItemHandler, INBTSerializable<CompoundTag> {
+public class GenerateItemHandler implements IItemHandler, INBTSerializable<CompoundTag> {
     private final int maxCountPerTime;
     private final Predicate<ItemStack> allowed;
     private ItemStack provided = ItemStack.EMPTY;
 
-    public InfiniteProvideContainer(int maxCountPerTime, Predicate<ItemStack> allowed) {
+    public GenerateItemHandler(int maxCountPerTime, Predicate<ItemStack> allowed) {
         this.maxCountPerTime = maxCountPerTime;
         this.allowed = allowed;
     }

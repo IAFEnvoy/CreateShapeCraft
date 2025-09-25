@@ -1,7 +1,7 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
 import com.iafenvoy.create.shape.registry.CSCBlockEntities;
-import com.iafenvoy.create.shape.item.container.InfiniteDestroyContainer;
+import com.iafenvoy.create.shape.item.block.container.VoidItemHandler;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
@@ -18,7 +18,7 @@ import java.util.List;
 
 @EventBusSubscriber
 public class ShapeDestroyerBlockEntity extends SmartBlockEntity {
-    protected final InfiniteDestroyContainer container = new InfiniteDestroyContainer();
+    protected final VoidItemHandler container = new VoidItemHandler();
 
     public ShapeDestroyerBlockEntity(BlockPos pos, BlockState blockState) {
         super(CSCBlockEntities.SHAPE_DESTROYER.get(), pos, blockState);

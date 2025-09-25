@@ -1,15 +1,16 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
+import com.iafenvoy.create.shape.item.block.container.GenerateItemHandler;
 import com.iafenvoy.create.shape.item.block.slot.ShapeGeneratorFilterSlot;
 import com.iafenvoy.create.shape.registry.CSCBlockEntities;
-import com.iafenvoy.create.shape.item.container.InfiniteProvideContainer;
-import com.iafenvoy.create.shape.util.Predicates;
+import com.iafenvoy.create.shape.registry.CSCItems;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -18,10 +19,12 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 @EventBusSubscriber
 public class ShapeGeneratorBlockEntity extends SmartBlockEntity {
-    protected final InfiniteProvideContainer container = new InfiniteProvideContainer(1, Predicates.ALLOW_GENERATE);
+    protected static final Predicate<ItemStack> IS_SHAPE = stack -> stack.is(CSCItems.SHAPE);
+    protected final GenerateItemHandler container = new GenerateItemHandler(1, IS_SHAPE);
     protected FilteringBehaviour filtering;
 
     public ShapeGeneratorBlockEntity(BlockPos pos, BlockState blockState) {
@@ -34,7 +37,7 @@ public class ShapeGeneratorBlockEntity extends SmartBlockEntity {
         this.filtering = new FilteringBehaviour(this, new ShapeGeneratorFilterSlot())
                 .showCount()
                 .withCallback(stack -> this.container.setProvided(stack.copyWithCount(this.filtering.getAmount())))
-                .withPredicate(Predicates.ALLOW_GENERATE);
+                .withPredicate(IS_SHAPE);
         behaviours.add(this.filtering);
     }
 

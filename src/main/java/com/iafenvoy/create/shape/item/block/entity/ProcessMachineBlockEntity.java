@@ -1,7 +1,7 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
-import com.iafenvoy.create.shape.item.ShapeDyeItem;
-import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
+import com.google.common.collect.ImmutableList;
+import com.iafenvoy.create.shape.item.block.container.ReadOnlyItemHandler;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.content.logistics.tunnel.BeltTunnelBlock;
@@ -18,6 +18,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedList;
@@ -49,7 +50,7 @@ public abstract class ProcessMachineBlockEntity extends BrassTunnelBlockEntity {
 
     private ItemStack insertShape(TransportedItemStack stack, Direction side, boolean simulate) {
         ItemStack input = stack.stack;
-        if (this.isRightForShape(side) && (this.inputStack.isEmpty() || ItemStack.isSameItemSameComponents(this.inputStack, input)) && input.getItem() instanceof ShapeDyeItem) {
+        if (this.isRightForShape(side) && (this.inputStack.isEmpty() || ItemStack.isSameItemSameComponents(this.inputStack, input))) {
             int remain = MAX_STACK_COUNT - this.inputStack.getCount();
             int inserted = Math.min(input.getCount(), remain);
             if (!simulate) {
@@ -112,6 +113,22 @@ public abstract class ProcessMachineBlockEntity extends BrassTunnelBlockEntity {
     }
 
     @Override
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        List<ItemStack> inputs = this.grabInputs(), outputs = this.grabOutputs();
+        if (!inputs.isEmpty()) {
+            CreateLang.translate("tooltip.machine.input").style(ChatFormatting.WHITE).forGoggles(tooltip);
+            for (ItemStack stack : inputs)
+                CreateLang.translate("tooltip.brass_tunnel.contains_entry", Component.translatable(stack.getDescriptionId()).getString(), stack.getCount()).style(ChatFormatting.GRAY).forGoggles(tooltip);
+        }
+        if (!outputs.isEmpty()) {
+            CreateLang.translate("tooltip.machine.output").style(ChatFormatting.WHITE).forGoggles(tooltip);
+            for (ItemStack stack : outputs)
+                CreateLang.translate("tooltip.brass_tunnel.contains_entry", Component.translatable(stack.getDescriptionId()).getString(), stack.getCount()).style(ChatFormatting.GRAY).forGoggles(tooltip);
+        }
+        return true;
+    }
+
+    @Override
     public void tick() {
         super.tick();
         this.processTimer++;
@@ -163,19 +180,11 @@ public abstract class ProcessMachineBlockEntity extends BrassTunnelBlockEntity {
         return List.of(this.outputStack);
     }
 
-    @Override
-    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        List<ItemStack> inputs = this.grabInputs(), outputs = this.grabOutputs();
-        if (!inputs.isEmpty()) {
-            CreateLang.translate("tooltip.machine.input").style(ChatFormatting.WHITE).forGoggles(tooltip);
-            for (ItemStack stack : inputs)
-                CreateLang.translate("tooltip.brass_tunnel.contains_entry", Component.translatable(stack.getDescriptionId()).getString(), stack.getCount()).style(ChatFormatting.GRAY).forGoggles(tooltip);
-        }
-        if (!outputs.isEmpty()) {
-            CreateLang.translate("tooltip.machine.output").style(ChatFormatting.WHITE).forGoggles(tooltip);
-            for (ItemStack stack : outputs)
-                CreateLang.translate("tooltip.brass_tunnel.contains_entry", Component.translatable(stack.getDescriptionId()).getString(), stack.getCount()).style(ChatFormatting.GRAY).forGoggles(tooltip);
-        }
-        return true;
+    private List<ItemStack> grabAllStacks() {
+        return ImmutableList.<ItemStack>builder().addAll(this.grabInputs()).addAll(this.grabOutputs()).build();
+    }
+
+    public IItemHandler getItemHandler() {
+        return new ReadOnlyItemHandler(this::grabAllStacks);
     }
 }

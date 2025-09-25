@@ -1,6 +1,7 @@
 package com.iafenvoy.create.shape.shape;
 
 import com.iafenvoy.create.shape.CreateShapeCraft;
+import com.iafenvoy.create.shape.registry.CSCTags;
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.ChatFormatting;
@@ -8,7 +9,9 @@ import net.minecraft.Util;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -131,16 +134,16 @@ public record ShapeInfo(List<Layer> layers) {
         private final String texture, slug;
 
         Shape(String texture, String slug) {
-            this.texture = texture;
+            this.texture = texture.toLowerCase(Locale.ROOT);
             this.slug = slug;
         }
 
         public ResourceLocation getBorderTexture() {
-            return ResourceLocation.tryBuild(CreateShapeCraft.MOD_ID, "textures/item/shape/%s_border.png".formatted(this.texture));
+            return ResourceLocation.fromNamespaceAndPath(CreateShapeCraft.MOD_ID, "textures/item/shape/%s_border.png".formatted(this.texture));
         }
 
         public ResourceLocation getInnerTexture() {
-            return ResourceLocation.tryBuild(CreateShapeCraft.MOD_ID, "textures/item/shape/%s_inner.png".formatted(this.texture));
+            return ResourceLocation.fromNamespaceAndPath(CreateShapeCraft.MOD_ID, "textures/item/shape/%s_inner.png".formatted(this.texture));
         }
 
         public String getSlug() {
@@ -154,20 +157,22 @@ public record ShapeInfo(List<Layer> layers) {
     }
 
     public enum Color {
-        RED(ChatFormatting.RED, "r"),
-        GREEN(ChatFormatting.GREEN, "g"),
-        BLUE(ChatFormatting.BLUE, "b"),
-        YELLOW(ChatFormatting.YELLOW, "y"),
-        PURPLE(ChatFormatting.LIGHT_PURPLE, "p"),
-        CYAN(ChatFormatting.AQUA, "c"),
-        UNCOLORED(ChatFormatting.GRAY, "u"),
-        WHITE(ChatFormatting.WHITE, "w");
+        RED(ChatFormatting.RED, "r", CSCTags.RED_DYES),
+        GREEN(ChatFormatting.GREEN, "g", CSCTags.GREEN_DYES),
+        BLUE(ChatFormatting.BLUE, "b", CSCTags.BLUE_DYES),
+        YELLOW(ChatFormatting.YELLOW, "y", CSCTags.YELLOW_DYES),
+        PURPLE(ChatFormatting.LIGHT_PURPLE, "p", CSCTags.PURPLE_DYES),
+        CYAN(ChatFormatting.AQUA, "c", CSCTags.CYAN_DYES),
+        UNCOLORED(ChatFormatting.GRAY, "u", CSCTags.UNCOLORED_DYES),
+        WHITE(ChatFormatting.WHITE, "w", CSCTags.WHITE_DYES);
         private final ChatFormatting color;
         private final String slug;
+        private final TagKey<Fluid> dyeFluid;
 
-        Color(ChatFormatting color, String slug) {
+        Color(ChatFormatting color, String slug, TagKey<Fluid> dyeFluid) {
             this.color = color;
             this.slug = slug;
+            this.dyeFluid = dyeFluid;
         }
 
         public ChatFormatting getFormatting() {
@@ -186,6 +191,12 @@ public record ShapeInfo(List<Layer> layers) {
         @Nullable
         public static Color fromSlug(String slug) {
             return Arrays.stream(values()).filter(x -> Objects.equals(x.getSlug(), slug)).findAny().orElse(null);
+        }
+
+        @SuppressWarnings("deprecation")
+        @Nullable
+        public static Color forFluid(Fluid fluid) {
+            return Arrays.stream(values()).filter(x -> fluid.is(x.dyeFluid)).findAny().orElse(null);
         }
     }
 

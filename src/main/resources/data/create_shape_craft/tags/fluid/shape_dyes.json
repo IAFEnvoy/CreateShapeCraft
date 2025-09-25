@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "#create_shape_craft:red_dyes",
+    "#create_shape_craft:green_dyes",
+    "#create_shape_craft:blue_dyes",
+    "#create_shape_craft:yellow_dyes",
+    "#create_shape_craft:purple_dyes",
+    "#create_shape_craft:cyan_dyes",
+    "#create_shape_craft:white_dyes"
+  ]
+}
