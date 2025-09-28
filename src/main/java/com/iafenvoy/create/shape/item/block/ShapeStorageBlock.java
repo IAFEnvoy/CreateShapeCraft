@@ -1,35 +1,24 @@
 package com.iafenvoy.create.shape.item.block;
 
 import com.iafenvoy.create.shape.item.block.entity.ShapeStorageBlockEntity;
-import com.mojang.serialization.MapCodec;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.BaseEntityBlock;
+import com.iafenvoy.create.shape.registry.CSCBlockEntities;
+import com.simibubi.create.foundation.block.IBE;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
-public class ShapeStorageBlock extends BaseEntityBlock {
-    public static final MapCodec<ShapeStorageBlock> CODEC = simpleCodec(p -> new ShapeStorageBlock());
-
+public class ShapeStorageBlock extends Block implements IBE<ShapeStorageBlockEntity> {
     public ShapeStorageBlock() {
         super(Properties.ofFullCopy(Blocks.SMOOTH_STONE));
     }
 
     @Override
-    protected @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
-        return RenderShape.MODEL;
+    public Class<ShapeStorageBlockEntity> getBlockEntityClass() {
+        return ShapeStorageBlockEntity.class;
     }
 
     @Override
-    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
-
-    @Override
-    public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
-        return new ShapeStorageBlockEntity(blockPos, blockState);
+    public BlockEntityType<? extends ShapeStorageBlockEntity> getBlockEntityType() {
+        return CSCBlockEntities.SHAPE_STORAGE.get();
     }
 }

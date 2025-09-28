@@ -1,7 +1,7 @@
 package com.iafenvoy.create.shape.item.attribute;
 
 import com.iafenvoy.create.shape.registry.CSCDataComponents;
-import com.iafenvoy.create.shape.shape.ShapeInfo;
+import com.iafenvoy.create.shape.data.ShapeInfo;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.simibubi.create.content.logistics.item.filter.attribute.ItemAttribute;

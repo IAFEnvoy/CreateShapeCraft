@@ -1,4 +1,4 @@
-package com.iafenvoy.create.shape.shape;
+package com.iafenvoy.create.shape.data;
 
 import java.util.List;
 import java.util.stream.Stream;

@@ -1,39 +1,31 @@
 package com.iafenvoy.create.shape.item.block;
 
 import com.iafenvoy.create.shape.item.block.entity.ShapeDestroyerBlockEntity;
-import com.mojang.serialization.MapCodec;
+import com.iafenvoy.create.shape.registry.CSCBlockEntities;
+import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-public class ShapeDestroyerBlock extends BaseEntityBlock {
-    public static final MapCodec<ShapeDestroyerBlock> CODEC = simpleCodec(p -> new ShapeDestroyerBlock());
-
+public class ShapeDestroyerBlock extends Block implements IBE<ShapeDestroyerBlockEntity> {
     public ShapeDestroyerBlock() {
         super(Properties.ofFullCopy(Blocks.SMOOTH_STONE));
     }
 
     @Override
-    protected @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
-        return RenderShape.MODEL;
+    public Class<ShapeDestroyerBlockEntity> getBlockEntityClass() {
+        return ShapeDestroyerBlockEntity.class;
     }
 
     @Override
-    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
-
-    @Override
-    public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
-        return new ShapeDestroyerBlockEntity(blockPos, blockState);
+    public BlockEntityType<? extends ShapeDestroyerBlockEntity> getBlockEntityType() {
+        return CSCBlockEntities.SHAPE_DESTROYER.get();
     }
 
     @Override

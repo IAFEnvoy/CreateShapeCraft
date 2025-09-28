@@ -1,7 +1,7 @@
 package com.iafenvoy.create.shape.registry;
 
 import com.iafenvoy.create.shape.CreateShapeCraft;
-import com.iafenvoy.create.shape.shape.ShapeInfo;
+import com.iafenvoy.create.shape.data.ShapeInfo;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.neoforge.registries.DeferredHolder;

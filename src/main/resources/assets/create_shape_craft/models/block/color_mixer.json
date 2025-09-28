@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "create_shape_craft:block/machine_base",
+    "up": "create_shape_craft:block/machine_base",
+    "east": "create_shape_craft:block/machine_fluid_input",
+    "south": "create_shape_craft:block/machine_base",
+    "west": "create_shape_craft:block/machine_fluid_input",
+    "north": "create_shape_craft:block/machine_fluid_output",
+    "particle": "create_shape_craft:block/machine_base"
+  }
+}

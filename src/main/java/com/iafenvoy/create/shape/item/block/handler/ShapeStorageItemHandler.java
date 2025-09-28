@@ -1,8 +1,8 @@
-package com.iafenvoy.create.shape.item.block.container;
+package com.iafenvoy.create.shape.item.block.handler;
 
 import com.iafenvoy.create.shape.item.ShapeItem;
 import com.iafenvoy.create.shape.registry.CSCDataComponents;
-import com.iafenvoy.create.shape.shape.ShapeInfo;
+import com.iafenvoy.create.shape.data.ShapeInfo;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;

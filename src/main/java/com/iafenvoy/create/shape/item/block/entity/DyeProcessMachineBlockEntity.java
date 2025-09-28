@@ -5,16 +5,19 @@ import com.iafenvoy.create.shape.item.block.DyeProcessMachineBlock;
 import com.iafenvoy.create.shape.registry.CSCBlockEntities;
 import com.iafenvoy.create.shape.registry.CSCDataComponents;
 import com.iafenvoy.create.shape.registry.CSCTags;
-import com.iafenvoy.create.shape.shape.ShapeInfo;
+import com.iafenvoy.create.shape.data.ShapeInfo;
 import com.simibubi.create.content.fluids.transfer.FluidDrainingBehaviour;
 import com.simibubi.create.content.fluids.transfer.FluidFillingBehaviour;
+import com.simibubi.create.content.logistics.tunnel.BeltTunnelBlock;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.EmptyFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import java.util.List;
@@ -55,7 +58,7 @@ public class DyeProcessMachineBlockEntity extends ProcessMachineBlockEntity {
     @Override
     protected void process() {
         ShapeInfo info = this.inputStack.get(CSCDataComponents.SHAPE);
-        if (this.inputStack.isEmpty() || info == null || !(this.dyeHandler.getFluidAmount() >= DYE_PER_SHAPE)) return;
+        if (this.inputStack.isEmpty() || info == null || this.dyeHandler.getFluidAmount() < DYE_PER_SHAPE) return;
         ItemStack result = ShapeItem.fromInfo(this.processor.apply(info, ShapeInfo.Color.forFluid(this.dyeHandler.getFluid().getFluid())));
         boolean success = false;
         if (this.outputStack.isEmpty()) {
@@ -72,7 +75,8 @@ public class DyeProcessMachineBlockEntity extends ProcessMachineBlockEntity {
         }
     }
 
-    public IFluidHandler getDyeHandler() {
-        return this.dyeHandler;
+    public IFluidHandler getFluidHandler(Direction dir) {
+        if (dir == null) return this.dyeHandler;
+        return dir.getAxis().isHorizontal() && dir.getAxis() != this.getBlockState().getValue(BeltTunnelBlock.HORIZONTAL_AXIS) ? this.dyeHandler : EmptyFluidHandler.INSTANCE;
     }
 }

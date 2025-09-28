@@ -2,7 +2,7 @@ package com.iafenvoy.create.shape.render.item;
 
 import com.iafenvoy.create.shape.registry.CSCDataComponents;
 import com.iafenvoy.create.shape.render.model.LayerModel;
-import com.iafenvoy.create.shape.shape.ShapeInfo;
+import com.iafenvoy.create.shape.data.ShapeInfo;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;

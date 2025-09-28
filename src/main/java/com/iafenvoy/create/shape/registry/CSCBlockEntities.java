@@ -23,6 +23,8 @@ public final class CSCBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<StackProcessMachineBlockEntity>> STACK_PROCESS_MACHINE = register("stack_process_machine", () -> BlockEntityType.Builder.of(StackProcessMachineBlockEntity::new, CSCBlocks.STACKER.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CutProcessMachineBlockEntity>> CUT_PROCESS_MACHINE = register("cut_process_machine", () -> BlockEntityType.Builder.of(CutProcessMachineBlockEntity::new, CSCBlocks.CUTTER_HORIZONTAL.get(), CSCBlocks.CUTTER_VERTICAL.get(), CSCBlocks.CUTTER_QUARTER.get()).build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ColorMixerBlockEntity>> COLOR_MIXER = register("color_mixer", () -> BlockEntityType.Builder.of(ColorMixerBlockEntity::new, CSCBlocks.COLOR_MIXER.get()).build(null));
+
     public static <T extends BlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<T>> register(String id, Supplier<BlockEntityType<T>> obj) {
         return REGISTRY.register(id, obj);
     }

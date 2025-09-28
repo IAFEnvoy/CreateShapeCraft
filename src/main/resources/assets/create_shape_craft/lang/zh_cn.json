@@ -1,4 +1,5 @@
 {
+  "block.create_shape_craft.color_mixer": "混色器",
   "block.create_shape_craft.cutter_horizontal": "横向切割机",
   "block.create_shape_craft.cutter_quarter": "四向切割机",
   "block.create_shape_craft.cutter_vertical": "纵向切割机",
@@ -31,7 +32,7 @@
   "create_shape_craft.ponder.dyer.header": "使用上色器给图形上色",
   "create_shape_craft.ponder.dyer.text_1": "上色器使用染料流体给整个图形上色。",
   "create_shape_craft.ponder.dyer.text_2": "图形从侧面进入机器。",
-  "create_shape_craft.ponder.dyer.text_3": "染料流体可以从任意面输入。",
+  "create_shape_craft.ponder.dyer.text_3": "染料流体可以从两个侧面输入。",
   "create_shape_craft.ponder.rotator.header": "使用旋转器来旋转图形",
   "create_shape_craft.ponder.rotator.text_1": "旋转机按照其顶部绘制的方向来旋转图形。",
   "create_shape_craft.ponder.rotator.text_2": "一共有三种不同类型的旋转器。",

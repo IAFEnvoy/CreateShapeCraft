@@ -1,9 +1,9 @@
 package com.iafenvoy.create.shape.ponder;
 
 import com.iafenvoy.create.shape.item.ShapeItem;
-import com.iafenvoy.create.shape.shape.BuiltinFilters;
-import com.iafenvoy.create.shape.shape.ShapeInfo;
-import com.iafenvoy.create.shape.shape.ShapeProcessors;
+import com.iafenvoy.create.shape.data.BuiltinFilters;
+import com.iafenvoy.create.shape.data.ShapeInfo;
+import com.iafenvoy.create.shape.data.ShapeProcessors;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.CogWheelBlock;
@@ -123,7 +123,7 @@ public class MachineStoryBoards {
         sb.idle(10);
         sb.overlay().showText(50)
                 .attachKeyFrame()
-                .text("Dye Fluid can insert from any side.")
+                .text("Dye Fluid can insert from other 2 sides.")
                 .placeNearTarget()
                 .pointAt(util.vector().blockSurface(new BlockPos(0, 2, 4), Direction.UP));
         sb.idle(60);

@@ -2,7 +2,7 @@ package com.iafenvoy.create.shape.registry;
 
 import com.iafenvoy.create.shape.CreateShapeCraft;
 import com.iafenvoy.create.shape.item.block.*;
-import com.iafenvoy.create.shape.shape.ShapeProcessors;
+import com.iafenvoy.create.shape.data.ShapeProcessors;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -27,6 +27,8 @@ public final class CSCBlocks {
     public static final DeferredBlock<CutProcessMachineBlock> CUTTER_HORIZONTAL = register("cutter_horizontal", () -> new CutProcessMachineBlock(ShapeProcessors::cutHorizontal));
     public static final DeferredBlock<CutProcessMachineBlock> CUTTER_VERTICAL = register("cutter_vertical", () -> new CutProcessMachineBlock(ShapeProcessors::cutVertical));
     public static final DeferredBlock<CutProcessMachineBlock> CUTTER_QUARTER = register("cutter_quarter", () -> new CutProcessMachineBlock(ShapeProcessors::cutQuarter));
+
+    public static final DeferredBlock<ColorMixerBlock> COLOR_MIXER = register("color_mixer", ColorMixerBlock::new);
 
     public static <T extends Block> DeferredBlock<T> register(String id, Supplier<T> obj) {
         return register(id, obj, block -> new BlockItem(block, new Item.Properties()));

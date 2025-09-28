@@ -1,8 +1,8 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
-import com.iafenvoy.create.shape.item.block.container.ShapeStorageItemHandler;
+import com.iafenvoy.create.shape.item.block.handler.ShapeStorageItemHandler;
 import com.iafenvoy.create.shape.registry.CSCBlockEntities;
-import com.iafenvoy.create.shape.shape.ShapeInfo;
+import com.iafenvoy.create.shape.data.ShapeInfo;
 import com.iafenvoy.create.shape.util.TextUtil;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;

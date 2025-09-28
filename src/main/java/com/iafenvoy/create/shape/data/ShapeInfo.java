@@ -1,4 +1,4 @@
-package com.iafenvoy.create.shape.shape;
+package com.iafenvoy.create.shape.data;
 
 import com.iafenvoy.create.shape.CreateShapeCraft;
 import com.iafenvoy.create.shape.registry.CSCTags;

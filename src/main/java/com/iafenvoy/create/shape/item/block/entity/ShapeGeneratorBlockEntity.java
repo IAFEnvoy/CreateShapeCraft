@@ -1,6 +1,6 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
-import com.iafenvoy.create.shape.item.block.container.GenerateItemHandler;
+import com.iafenvoy.create.shape.item.block.handler.GenerateItemHandler;
 import com.iafenvoy.create.shape.item.block.slot.ShapeGeneratorFilterSlot;
 import com.iafenvoy.create.shape.registry.CSCBlockEntities;
 import com.iafenvoy.create.shape.registry.CSCItems;

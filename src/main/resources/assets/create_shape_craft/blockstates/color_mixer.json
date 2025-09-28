@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "create_shape_craft:block/color_mixer"
+    },
+    "facing=east": {
+      "model": "create_shape_craft:block/color_mixer",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "create_shape_craft:block/color_mixer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "create_shape_craft:block/color_mixer",
+      "y": 270
+    }
+  }
+}

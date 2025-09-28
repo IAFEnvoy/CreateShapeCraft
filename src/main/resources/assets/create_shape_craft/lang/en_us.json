@@ -1,4 +1,5 @@
 {
+  "block.create_shape_craft.color_mixer": "Color Mixer",
   "block.create_shape_craft.cutter_horizontal": "Horizontal Cutter",
   "block.create_shape_craft.cutter_quarter": "Quarter Cutter",
   "block.create_shape_craft.cutter_vertical": "Vertical Cutter",
@@ -31,7 +32,7 @@
   "create_shape_craft.ponder.dyer.header": "Use dyers to dye shapes",
   "create_shape_craft.ponder.dyer.text_1": "The dyer dyes the whole shape with dye fluid.",
   "create_shape_craft.ponder.dyer.text_2": "Base shape insert from sides of the machine.",
-  "create_shape_craft.ponder.dyer.text_3": "Dye Fluid can insert from any side.",
+  "create_shape_craft.ponder.dyer.text_3": "Dye Fluid can insert from other 2 sides.",
   "create_shape_craft.ponder.rotator.header": "Use rotators to rotate shapes",
   "create_shape_craft.ponder.rotator.text_1": "The rotator rotates shapes according to the direction drawn on the top.",
   "create_shape_craft.ponder.rotator.text_2": "There are 3 variants of rotators.",

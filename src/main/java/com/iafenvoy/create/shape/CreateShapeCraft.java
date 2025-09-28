@@ -1,5 +1,7 @@
 package com.iafenvoy.create.shape;
 
+import com.iafenvoy.create.shape.item.block.entity.ColorMixerBlockEntity;
+import com.iafenvoy.create.shape.item.block.entity.DyeProcessMachineBlockEntity;
 import com.iafenvoy.create.shape.ponder.CSCPonderPlugin;
 import com.iafenvoy.create.shape.registry.*;
 import com.mojang.logging.LogUtils;
@@ -30,6 +32,7 @@ public class CreateShapeCraft {
         PonderIndex.addPlugin(CSCPonderPlugin.INSTANCE);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         //Item
@@ -41,6 +44,7 @@ public class CreateShapeCraft {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CSCBlockEntities.STACK_PROCESS_MACHINE.get(), (be, dir) -> be.getItemHandler());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CSCBlockEntities.CUT_PROCESS_MACHINE.get(), (be, dir) -> be.getItemHandler());
         //Fluid
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, CSCBlockEntities.DYE_PROCESS_MACHINE.get(), (be, dir) -> be.getDyeHandler());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, CSCBlockEntities.DYE_PROCESS_MACHINE.get(), DyeProcessMachineBlockEntity::getFluidHandler);
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, CSCBlockEntities.COLOR_MIXER.get(), ColorMixerBlockEntity::getFluidHandler);
     }
 }

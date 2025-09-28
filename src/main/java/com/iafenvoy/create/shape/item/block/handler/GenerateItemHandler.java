@@ -1,4 +1,4 @@
-package com.iafenvoy.create.shape.item.block.container;
+package com.iafenvoy.create.shape.item.block.handler;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;

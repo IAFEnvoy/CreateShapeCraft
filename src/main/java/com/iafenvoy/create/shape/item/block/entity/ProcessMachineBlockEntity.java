@@ -1,7 +1,7 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
 import com.google.common.collect.ImmutableList;
-import com.iafenvoy.create.shape.item.block.container.ReadOnlyItemHandler;
+import com.iafenvoy.create.shape.item.block.handler.ReadOnlyItemHandler;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.content.logistics.tunnel.BeltTunnelBlock;
