@@ -1,5 +1,6 @@
 package com.iafenvoy.create.shape.render.item;
 
+import com.iafenvoy.create.shape.data.ShapeQuarter;
 import com.iafenvoy.create.shape.registry.CSCDataComponents;
 import com.iafenvoy.create.shape.render.model.LayerModel;
 import com.iafenvoy.create.shape.data.ShapeInfo;
@@ -36,7 +37,7 @@ public class ShapeItemRenderer extends BlockEntityWithoutLevelRenderer {
             poseStack.pushPose();
             float scale = Math.max(0.1F, 0.9F - i * 0.22F);
             poseStack.scale(scale, scale, scale);
-            ShapeInfo.Quarter.stream().map(x -> layer.parts().get(x)).forEach(x -> this.renderPart(poseStack, buffer, x, light, overlay));
+            ShapeQuarter.stream().map(x -> layer.parts().get(x)).forEach(x -> this.renderPart(poseStack, buffer, x, light, overlay));
             poseStack.popPose();
             poseStack.translate(0, 0.001, 0);
         }

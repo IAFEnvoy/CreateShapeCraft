@@ -1,5 +1,6 @@
 package com.iafenvoy.create.shape.ponder;
 
+import com.iafenvoy.create.shape.data.ShapeColor;
 import com.iafenvoy.create.shape.item.ShapeItem;
 import com.iafenvoy.create.shape.data.BuiltinFilters;
 import com.iafenvoy.create.shape.data.ShapeInfo;
@@ -135,7 +136,7 @@ public class MachineStoryBoards {
         sb.overlay().showControls(new Vec3(4.5, 2, 2.5), Pointing.DOWN, 50).withItem(shapeStack);
         sb.overlay().showControls(new Vec3(0.5, 3, 4.5), Pointing.DOWN, 50).withItem(CDPFluids.DYES_BY_COLOR.get(DyeColor.RED).getBucket().orElse(Items.AIR).getDefaultInstance());
         sb.idle(20);
-        sb.overlay().showControls(new Vec3(0.5, 2, 2.5), Pointing.DOWN, 30).withItem(ShapeItem.fromInfo(ShapeProcessors.color(example, ShapeInfo.Color.RED)));
+        sb.overlay().showControls(new Vec3(0.5, 2, 2.5), Pointing.DOWN, 30).withItem(ShapeItem.fromInfo(ShapeProcessors.color(example, ShapeColor.RED)));
         sb.idle(40);
     }
 

@@ -12,24 +12,24 @@ public final class ShapeProcessors {
     //Cutter
     public static List<ShapeInfo> cutVertical(ShapeInfo info) {
         return Stream.of(
-                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.BOTTOM_LEFT, ShapeInfo.Quarter.TOP_LEFT)).toList()),
-                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.TOP_RIGHT, ShapeInfo.Quarter.BOTTOM_RIGHT)).toList())
+                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeQuarter.BOTTOM_LEFT, ShapeQuarter.TOP_LEFT)).toList()),
+                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeQuarter.TOP_RIGHT, ShapeQuarter.BOTTOM_RIGHT)).toList())
         ).filter(x -> !x.isEmpty()).toList();
     }
 
     public static List<ShapeInfo> cutHorizontal(ShapeInfo info) {
         return Stream.of(
-                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.TOP_RIGHT, ShapeInfo.Quarter.TOP_LEFT)).toList()),
-                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.BOTTOM_RIGHT, ShapeInfo.Quarter.BOTTOM_LEFT)).toList())
+                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeQuarter.TOP_RIGHT, ShapeQuarter.TOP_LEFT)).toList()),
+                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeQuarter.BOTTOM_RIGHT, ShapeQuarter.BOTTOM_LEFT)).toList())
         ).filter(x -> !x.isEmpty()).toList();
     }
 
     public static List<ShapeInfo> cutQuarter(ShapeInfo info) {
         return Stream.of(
-                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.TOP_RIGHT)).toList()),
-                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.BOTTOM_RIGHT)).toList()),
-                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.BOTTOM_LEFT)).toList()),
-                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeInfo.Quarter.TOP_LEFT)).toList())
+                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeQuarter.TOP_RIGHT)).toList()),
+                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeQuarter.BOTTOM_RIGHT)).toList()),
+                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeQuarter.BOTTOM_LEFT)).toList()),
+                new ShapeInfo(info.layers().stream().map(x -> x.collect(ShapeQuarter.TOP_LEFT)).toList())
         ).filter(x -> !x.isEmpty()).toList();
     }
 
@@ -72,11 +72,11 @@ public final class ShapeProcessors {
     }
 
     //Dyer
-    public static ShapeInfo color(ShapeInfo info, ShapeInfo.Color color) {
+    public static ShapeInfo color(ShapeInfo info, ShapeColor color) {
         return new ShapeInfo(info.layers().stream().map(x -> x.withColor(color)).toList());
     }
 
-    public static ShapeInfo color(ShapeInfo info, EnumMap<ShapeInfo.Quarter, ShapeInfo.Color> colors) {
+    public static ShapeInfo color(ShapeInfo info, EnumMap<ShapeQuarter, ShapeColor> colors) {
         return new ShapeInfo(info.layers().stream().map(x -> x.withColor(colors)).toList());
     }
 }

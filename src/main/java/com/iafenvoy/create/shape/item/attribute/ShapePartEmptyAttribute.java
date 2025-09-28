@@ -1,5 +1,6 @@
 package com.iafenvoy.create.shape.item.attribute;
 
+import com.iafenvoy.create.shape.data.ShapeQuarter;
 import com.iafenvoy.create.shape.registry.CSCDataComponents;
 import com.iafenvoy.create.shape.data.ShapeInfo;
 import com.mojang.serialization.Codec;
@@ -19,13 +20,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.LinkedList;
 import java.util.List;
 
-public record ShapePartEmptyAttribute(ShapeInfo.Quarter quarter, boolean empty) implements ItemAttribute {
+public record ShapePartEmptyAttribute(ShapeQuarter quarter, boolean empty) implements ItemAttribute {
     public static final MapCodec<ShapePartEmptyAttribute> CODEC = RecordCodecBuilder.<ShapePartEmptyAttribute>create(i -> i.group(
-            ShapeInfo.Quarter.CODEC.fieldOf("quarter").forGetter(ShapePartEmptyAttribute::quarter),
+            ShapeQuarter.CODEC.fieldOf("quarter").forGetter(ShapePartEmptyAttribute::quarter),
             Codec.BOOL.fieldOf("empty").forGetter(ShapePartEmptyAttribute::empty)
     ).apply(i, ShapePartEmptyAttribute::new)).fieldOf("value");
     public static final StreamCodec<ByteBuf, ShapePartEmptyAttribute> STREAM_CODEC = StreamCodec.composite(
-            ShapeInfo.Quarter.STREAM_CODEC, ShapePartEmptyAttribute::quarter,
+            ShapeQuarter.STREAM_CODEC, ShapePartEmptyAttribute::quarter,
             ByteBufCodecs.BOOL, ShapePartEmptyAttribute::empty,
             ShapePartEmptyAttribute::new
     );
@@ -56,7 +57,7 @@ public record ShapePartEmptyAttribute(ShapeInfo.Quarter quarter, boolean empty) 
 
         @Override
         public @NotNull ItemAttribute createAttribute() {
-            return new ShapePartEmptyAttribute(ShapeInfo.Quarter.TOP_RIGHT, true);
+            return new ShapePartEmptyAttribute(ShapeQuarter.TOP_RIGHT, true);
         }
 
         @Override
@@ -64,7 +65,7 @@ public record ShapePartEmptyAttribute(ShapeInfo.Quarter quarter, boolean empty) 
             ShapeInfo info = stack.get(CSCDataComponents.SHAPE);
             List<ItemAttribute> attributes = new LinkedList<>();
             if (info != null)
-                ShapeInfo.Quarter.stream().map(x -> new ShapePartEmptyAttribute(x, info.layers().stream().allMatch(y -> y.parts().get(x).isEmpty()))).forEach(attributes::add);
+                ShapeQuarter.stream().map(x -> new ShapePartEmptyAttribute(x, info.layers().stream().allMatch(y -> y.parts().get(x).isEmpty()))).forEach(attributes::add);
             return attributes;
         }
 

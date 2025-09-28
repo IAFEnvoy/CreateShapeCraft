@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class BuiltinFilters {
-    public static final List<List<ItemAttribute>> CORNERS = ShapeInfo.Quarter.stream()
+    public static final List<List<ItemAttribute>> CORNERS = ShapeQuarter.stream()
             .map(x -> new ShapePartEmptyAttribute(x, false))
             .map(ItemAttribute.class::cast)
             .map(List::of)

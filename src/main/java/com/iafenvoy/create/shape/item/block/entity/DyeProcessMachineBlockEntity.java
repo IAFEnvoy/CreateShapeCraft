@@ -1,5 +1,6 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
+import com.iafenvoy.create.shape.data.ShapeColor;
 import com.iafenvoy.create.shape.item.ShapeItem;
 import com.iafenvoy.create.shape.item.block.DyeProcessMachineBlock;
 import com.iafenvoy.create.shape.registry.CSCBlockEntities;
@@ -25,7 +26,7 @@ import java.util.function.BiFunction;
 
 public class DyeProcessMachineBlockEntity extends ProcessMachineBlockEntity {
     private static final int DYE_PER_SHAPE = 50;
-    private final BiFunction<ShapeInfo, ShapeInfo.Color, ShapeInfo> processor;
+    private final BiFunction<ShapeInfo, ShapeColor, ShapeInfo> processor;
     protected final FluidTank dyeHandler = new FluidTank(1000).setValidator(stack -> stack.is(CSCTags.SHAPE_DYES));
 
     public DyeProcessMachineBlockEntity(BlockPos pos, BlockState state) {
@@ -59,7 +60,7 @@ public class DyeProcessMachineBlockEntity extends ProcessMachineBlockEntity {
     protected void process() {
         ShapeInfo info = this.inputStack.get(CSCDataComponents.SHAPE);
         if (this.inputStack.isEmpty() || info == null || this.dyeHandler.getFluidAmount() < DYE_PER_SHAPE) return;
-        ItemStack result = ShapeItem.fromInfo(this.processor.apply(info, ShapeInfo.Color.forFluid(this.dyeHandler.getFluid().getFluid())));
+        ItemStack result = ShapeItem.fromInfo(this.processor.apply(info, ShapeColor.forFluid(this.dyeHandler.getFluid().getFluid())));
         boolean success = false;
         if (this.outputStack.isEmpty()) {
             this.outputStack = result;
