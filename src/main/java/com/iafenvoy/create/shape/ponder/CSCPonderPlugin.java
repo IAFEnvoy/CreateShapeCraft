@@ -28,6 +28,8 @@ public enum CSCPonderPlugin implements PonderPlugin {
         helper.forComponents(CSCBlocks.CUTTER_HORIZONTAL.getId(), CSCBlocks.CUTTER_VERTICAL.getId(), CSCBlocks.CUTTER_QUARTER.getId())
                 .addStoryBoard(ResourceLocation.fromNamespaceAndPath(CreateShapeCraft.MOD_ID, "cutter"), MachineStoryBoards::cutter)
                 .addStoryBoard(ResourceLocation.fromNamespaceAndPath(CreateShapeCraft.MOD_ID, "cutter_variants"), MachineStoryBoards::cutterVariants);
+        helper.forComponents(CSCBlocks.COLOR_MIXER.getId())
+                .addStoryBoard(ResourceLocation.fromNamespaceAndPath(CreateShapeCraft.MOD_ID, "color_mixer"), MachineStoryBoards::colorMixer);
     }
 
     @Override
@@ -46,6 +48,7 @@ public enum CSCPonderPlugin implements PonderPlugin {
                 .add(CSCBlocks.STACKER.getId())
                 .add(CSCBlocks.CUTTER_HORIZONTAL.getId())
                 .add(CSCBlocks.CUTTER_VERTICAL.getId())
-                .add(CSCBlocks.CUTTER_QUARTER.getId());
+                .add(CSCBlocks.CUTTER_QUARTER.getId())
+                .add(CSCBlocks.COLOR_MIXER.getId());
     }
 }

@@ -29,7 +29,7 @@ public class ColorMixData {
 
     private record MixHolder(ShapeColor input1, ShapeColor input2, ShapeColor output) {
         public boolean match(ShapeColor input1, ShapeColor input2) {
-            return this.input1 == input1 && this.input2 == input2;
+            return this.input1 == input1 && this.input2 == input2 || this.input1 == input2 && this.input2 == input1;
         }
     }
 }

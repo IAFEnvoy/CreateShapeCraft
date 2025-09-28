@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "create_dragons_plus:white_dye"
+    "create_dragons_plus:white_dye",
+    "create_dragons_plus:flowing_white_dye"
   ]
 }

@@ -1,11 +1,12 @@
 package com.iafenvoy.create.shape.ponder;
 
-import com.iafenvoy.create.shape.data.ShapeColor;
-import com.iafenvoy.create.shape.item.ShapeItem;
 import com.iafenvoy.create.shape.data.BuiltinFilters;
+import com.iafenvoy.create.shape.data.ShapeColor;
 import com.iafenvoy.create.shape.data.ShapeInfo;
 import com.iafenvoy.create.shape.data.ShapeProcessors;
+import com.iafenvoy.create.shape.item.ShapeItem;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.CogWheelBlock;
 import com.simibubi.create.content.logistics.tunnel.BrassTunnelBlockEntity;
@@ -20,8 +21,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.fluids.FluidStack;
 import plus.dragons.createdragonsplus.common.registry.CDPFluids;
 
 import java.util.List;
@@ -134,7 +136,7 @@ public class MachineStoryBoards {
         ItemStack shapeStack = ShapeItem.fromInfo(example);
         sb.world().createItemOnBelt(util.grid().at(4, 1, 2), Direction.EAST, shapeStack);
         sb.overlay().showControls(new Vec3(4.5, 2, 2.5), Pointing.DOWN, 50).withItem(shapeStack);
-        sb.overlay().showControls(new Vec3(0.5, 3, 4.5), Pointing.DOWN, 50).withItem(CDPFluids.DYES_BY_COLOR.get(DyeColor.RED).getBucket().orElse(Items.AIR).getDefaultInstance());
+        sb.overlay().showControls(new Vec3(0.5, 3, 4.5), Pointing.DOWN, 50).withItem(getDyeFluidBucket(DyeColor.RED));
         sb.idle(20);
         sb.overlay().showControls(new Vec3(0.5, 2, 2.5), Pointing.DOWN, 30).withItem(ShapeItem.fromInfo(ShapeProcessors.color(example, ShapeColor.RED)));
         sb.idle(40);
@@ -325,6 +327,74 @@ public class MachineStoryBoards {
         sb.idle(60);
         sb.rotateCameraY(45);
         sb.idle(20);
+    }
+
+    public static void colorMixer(SceneBuilder builder, SceneBuildingUtil util) {
+        CreateSceneBuilder sb = new CreateSceneBuilder(builder);
+        //Start
+        sb.title("color_mixer", "Use color mixers to mix dye liquid.");
+        sb.configureBasePlate(0, 0, 7);
+        //Initialize
+        sb.world().showSection(util.select().layer(0), Direction.UP);
+        sb.idle(10);
+        sb.world().showSection(util.select().position(3, 1, 3), Direction.DOWN);
+        sb.idle(10);
+        //Introduce
+        sb.overlay().showText(50)
+                .attachKeyFrame()
+                .text("The color mixer can mix two dye fluid into a new color.")
+                .placeNearTarget()
+                .pointAt(util.vector().blockSurface(new BlockPos(3, 1, 3), Direction.UP));
+        sb.idle(60);
+        sb.world().showSection(util.select().position(3, 1, 1), Direction.DOWN);
+        sb.idle(10);
+        sb.overlay().showText(70)
+                .attachKeyFrame()
+                .text("There are 2 inputs and 1 output on the sides of color mixer.");
+        sb.overlay().showText(70)
+                .attachKeyFrame()
+                .text("Input 1")
+                .placeNearTarget()
+                .pointAt(util.vector().blockSurface(new BlockPos(3, 1, 3), Direction.WEST));
+        sb.overlay().showText(70)
+                .attachKeyFrame()
+                .text("Input 2")
+                .placeNearTarget()
+                .pointAt(util.vector().blockSurface(new BlockPos(3, 1, 1), Direction.WEST).add(0, 0.25, 0.25));
+        sb.overlay().showText(70)
+                .attachKeyFrame()
+                .text("Output")
+                .placeNearTarget()
+                .pointAt(util.vector().blockSurface(new BlockPos(3, 1, 1), Direction.NORTH).subtract(0.25, 0.25, 0));
+        sb.idle(80);
+        sb.world().hideSection(util.select().position(3, 1, 1), Direction.UP);
+        sb.idle(20);
+        sb.world().showSection(util.select().fromTo(4, 1, 3, 6, 2, 7), Direction.WEST);
+        sb.idle(5);
+        sb.world().showSection(util.select().fromTo(3, 1, 4, 3, 2, 6), Direction.NORTH);
+        sb.idle(5);
+        sb.world().showSection(util.select().fromTo(2, 1, 3, 0, 2, 6), Direction.EAST);
+        sb.idle(10);
+        sb.overlay().showText(50)
+                .attachKeyFrame()
+                .text("Use pipes and pumps to interact.");
+        sb.idle(60);
+        //Example
+        sb.world().modifyBlockEntity(new BlockPos(6, 1, 3), FluidTankBlockEntity.class, be -> be.getTankInventory().setFluid(new FluidStack(getDyeFluid(DyeColor.RED), 16000)));
+        sb.overlay().showControls(new Vec3(6.5, 3, 3.5), Pointing.DOWN, 70).withItem(getDyeFluidBucket(DyeColor.RED));
+        sb.world().modifyBlockEntity(new BlockPos(0, 1, 3), FluidTankBlockEntity.class, be -> be.getTankInventory().setFluid(new FluidStack(getDyeFluid(DyeColor.BLUE), 16000)));
+        sb.overlay().showControls(new Vec3(0.5, 3, 3.5), Pointing.DOWN, 70).withItem(getDyeFluidBucket(DyeColor.BLUE));
+        sb.idle(20);
+        sb.overlay().showControls(new Vec3(3.5, 3, 6.5), Pointing.DOWN, 50).withItem(getDyeFluidBucket(DyeColor.PURPLE));
+        sb.idle(60);
+    }
+
+    private static Fluid getDyeFluid(DyeColor color) {
+        return CDPFluids.DYES_BY_COLOR.get(color).get();
+    }
+
+    private static ItemStack getDyeFluidBucket(DyeColor color) {
+        return getDyeFluid(color).getBucket().getDefaultInstance();
     }
 
     private static Vec3 getTunnelFilterVec(BlockPos pos) {
