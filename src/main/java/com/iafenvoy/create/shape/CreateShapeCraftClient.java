@@ -1,6 +1,8 @@
 package com.iafenvoy.create.shape;
 
+import com.iafenvoy.create.shape.ponder.CSCPonderPlugin;
 import com.iafenvoy.create.shape.registry.CSCRenderers;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -20,5 +22,7 @@ public class CreateShapeCraftClient {
         CSCRenderers.registerBlockEntityRenderers();
         //FlyWheel
         CSCRenderers.registerVisualizers();
+        //Ponder
+        PonderIndex.addPlugin(CSCPonderPlugin.INSTANCE);
     }
 }

@@ -40,7 +40,7 @@ Check out how to use in-game with Ponder.
 
 ### Will electric layer be added?
 
-I already have this idea, but I think integrate with redstone is a better idea.
+I already have this idea, but I think integrate with redstone is better.
 
 ### Will this mod backport?
 

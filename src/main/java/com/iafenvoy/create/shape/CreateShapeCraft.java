@@ -2,10 +2,8 @@ package com.iafenvoy.create.shape;
 
 import com.iafenvoy.create.shape.item.block.entity.ColorMixerBlockEntity;
 import com.iafenvoy.create.shape.item.block.entity.DyeProcessMachineBlockEntity;
-import com.iafenvoy.create.shape.ponder.CSCPonderPlugin;
 import com.iafenvoy.create.shape.registry.*;
 import com.mojang.logging.LogUtils;
-import net.createmod.ponder.foundation.PonderIndex;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -29,10 +27,8 @@ public class CreateShapeCraft {
         CSCItems.REGISTRY.register(bus);
         //Create Registry
         CSCItemAttributes.REGISTRY.register(bus);
-        PonderIndex.addPlugin(CSCPonderPlugin.INSTANCE);
     }
 
-    @SuppressWarnings("DataFlowIssue")
     @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         //Item
