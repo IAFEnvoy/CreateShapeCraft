@@ -1,22 +1,17 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
-import com.iafenvoy.create.shape.registry.CSCBlockEntities;
 import com.iafenvoy.create.shape.item.block.handler.VoidItemHandler;
+import com.iafenvoy.create.shape.registry.CSCBlockEntities;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.List;
 
-@EventBusSubscriber
 public class ShapeDestroyerBlockEntity extends SmartBlockEntity {
     protected final VoidItemHandler container = new VoidItemHandler();
 
@@ -40,10 +35,5 @@ public class ShapeDestroyerBlockEntity extends SmartBlockEntity {
 
     public IItemHandler getItemHandler() {
         return this.container;
-    }
-
-    @SubscribeEvent
-    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CSCBlockEntities.SHAPE_DESTROYER.get(), (be, context) -> be.getItemHandler());
     }
 }

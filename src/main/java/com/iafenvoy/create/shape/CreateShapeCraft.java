@@ -3,23 +3,19 @@ package com.iafenvoy.create.shape;
 import com.iafenvoy.create.shape.item.block.entity.ColorMixerBlockEntity;
 import com.iafenvoy.create.shape.item.block.entity.DyeProcessMachineBlockEntity;
 import com.iafenvoy.create.shape.registry.*;
-import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import org.slf4j.Logger;
 
 @Mod(CreateShapeCraft.MOD_ID)
 @EventBusSubscriber
 public class CreateShapeCraft {
     public static final String MOD_ID = "create_shape_craft";
-    public static final Logger LOGGER = LogUtils.getLogger();
 
-    public CreateShapeCraft(IEventBus bus, ModContainer container) {
+    public CreateShapeCraft(IEventBus bus) {
         CSCBlocks.REGISTRY.register(bus);
         CSCBlockEntities.REGISTRY.register(bus);
         CSCCreativeModeTabs.REGISTRY.register(bus);

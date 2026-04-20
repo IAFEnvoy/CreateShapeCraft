@@ -1,8 +1,8 @@
 package com.iafenvoy.create.shape.registry;
 
 import com.iafenvoy.create.shape.CreateShapeCraft;
-import com.iafenvoy.create.shape.item.block.*;
 import com.iafenvoy.create.shape.data.ShapeProcessors;
+import com.iafenvoy.create.shape.item.block.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;

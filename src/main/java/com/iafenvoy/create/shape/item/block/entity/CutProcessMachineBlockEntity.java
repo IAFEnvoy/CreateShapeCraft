@@ -1,11 +1,11 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
+import com.iafenvoy.create.shape.data.ShapeInfo;
 import com.iafenvoy.create.shape.item.ShapeItem;
 import com.iafenvoy.create.shape.item.block.CutProcessMachineBlock;
 import com.iafenvoy.create.shape.registry.CSCBlockEntities;
 import com.iafenvoy.create.shape.registry.CSCBlocks;
 import com.iafenvoy.create.shape.registry.CSCDataComponents;
-import com.iafenvoy.create.shape.data.ShapeInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;

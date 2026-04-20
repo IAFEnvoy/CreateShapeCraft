@@ -1,8 +1,8 @@
 package com.iafenvoy.create.shape.item.attribute;
 
+import com.iafenvoy.create.shape.data.ShapeInfo;
 import com.iafenvoy.create.shape.data.ShapeQuarter;
 import com.iafenvoy.create.shape.registry.CSCDataComponents;
-import com.iafenvoy.create.shape.data.ShapeInfo;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

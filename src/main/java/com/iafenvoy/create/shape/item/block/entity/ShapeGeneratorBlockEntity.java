@@ -12,19 +12,14 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.List;
 import java.util.function.Predicate;
 
-@EventBusSubscriber
 public class ShapeGeneratorBlockEntity extends SmartBlockEntity {
     protected static final Predicate<ItemStack> IS_SHAPE = stack -> stack.is(CSCItems.SHAPE);
-    protected final GenerateItemHandler container = new GenerateItemHandler(1, IS_SHAPE);
+    protected final GenerateItemHandler container = new GenerateItemHandler( IS_SHAPE);
     protected FilteringBehaviour filtering;
 
     public ShapeGeneratorBlockEntity(BlockPos pos, BlockState blockState) {
@@ -55,10 +50,5 @@ public class ShapeGeneratorBlockEntity extends SmartBlockEntity {
 
     public IItemHandler getItemHandler() {
         return this.container;
-    }
-
-    @SubscribeEvent
-    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CSCBlockEntities.SHAPE_GENERATOR.get(), (be, context) -> be.getItemHandler());
     }
 }

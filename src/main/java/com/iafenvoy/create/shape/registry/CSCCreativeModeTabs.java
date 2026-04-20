@@ -1,9 +1,9 @@
 package com.iafenvoy.create.shape.registry;
 
 import com.iafenvoy.create.shape.CreateShapeCraft;
-import com.iafenvoy.create.shape.item.ShapeItem;
 import com.iafenvoy.create.shape.data.BuiltinFilters;
 import com.iafenvoy.create.shape.data.BuiltinShapes;
+import com.iafenvoy.create.shape.item.ShapeItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;

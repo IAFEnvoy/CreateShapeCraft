@@ -1,12 +1,12 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
 import com.iafenvoy.create.shape.data.ShapeColor;
+import com.iafenvoy.create.shape.data.ShapeInfo;
 import com.iafenvoy.create.shape.item.ShapeItem;
 import com.iafenvoy.create.shape.item.block.DyeProcessMachineBlock;
 import com.iafenvoy.create.shape.registry.CSCBlockEntities;
 import com.iafenvoy.create.shape.registry.CSCDataComponents;
 import com.iafenvoy.create.shape.registry.CSCTags;
-import com.iafenvoy.create.shape.data.ShapeInfo;
 import com.simibubi.create.content.fluids.transfer.FluidDrainingBehaviour;
 import com.simibubi.create.content.fluids.transfer.FluidFillingBehaviour;
 import com.simibubi.create.content.logistics.tunnel.BeltTunnelBlock;

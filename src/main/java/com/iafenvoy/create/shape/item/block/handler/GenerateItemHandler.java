@@ -7,15 +7,14 @@ import net.neoforged.neoforge.common.util.INBTSerializable;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.IntSupplier;
 import java.util.function.Predicate;
 
 public class GenerateItemHandler implements IItemHandler, INBTSerializable<CompoundTag> {
-    private final int maxCountPerTime;
     private final Predicate<ItemStack> allowed;
     private ItemStack provided = ItemStack.EMPTY;
 
-    public GenerateItemHandler(int maxCountPerTime, Predicate<ItemStack> allowed) {
-        this.maxCountPerTime = maxCountPerTime;
+    public GenerateItemHandler(Predicate<ItemStack> allowed) {
         this.allowed = allowed;
     }
 
@@ -34,7 +33,7 @@ public class GenerateItemHandler implements IItemHandler, INBTSerializable<Compo
 
     @Override
     public @NotNull ItemStack getStackInSlot(int slot) {
-        return this.provided.copyWithCount(this.getSlotLimit(slot));
+        return this.provided;
     }
 
     @Override
@@ -44,12 +43,12 @@ public class GenerateItemHandler implements IItemHandler, INBTSerializable<Compo
 
     @Override
     public @NotNull ItemStack extractItem(int slot, int count, boolean simulate) {
-        return this.getStackInSlot(slot);
+        return this.getStackInSlot(slot).copyWithCount(Math.min(count, this.getSlotLimit(slot)));
     }
 
     @Override
     public int getSlotLimit(int slot) {
-        return this.maxCountPerTime;
+        return this.provided.getCount();
     }
 
     @Override

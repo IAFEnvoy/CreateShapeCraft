@@ -1,8 +1,8 @@
 package com.iafenvoy.create.shape.item.block.entity;
 
+import com.iafenvoy.create.shape.data.ShapeInfo;
 import com.iafenvoy.create.shape.item.block.handler.ShapeStorageItemHandler;
 import com.iafenvoy.create.shape.registry.CSCBlockEntities;
-import com.iafenvoy.create.shape.data.ShapeInfo;
 import com.iafenvoy.create.shape.util.TextUtil;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
@@ -14,15 +14,10 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.List;
 
-@EventBusSubscriber
 public class ShapeStorageBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
     protected final ShapeStorageItemHandler container = new ShapeStorageItemHandler(this, 65536);
 
@@ -56,10 +51,5 @@ public class ShapeStorageBlockEntity extends SmartBlockEntity implements IHaveGo
 
     public IItemHandler getItemHandler() {
         return this.container;
-    }
-
-    @SubscribeEvent
-    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CSCBlockEntities.SHAPE_STORAGE.get(), (be, context) -> be.getItemHandler());
     }
 }
