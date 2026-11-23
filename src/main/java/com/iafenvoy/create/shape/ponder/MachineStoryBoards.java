@@ -21,10 +21,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.fluids.FluidStack;
-import plus.dragons.createdragonsplus.common.registry.CDPFluids;
 
 import java.util.List;
 
@@ -380,21 +378,17 @@ public class MachineStoryBoards {
                 .text("Use pipes and pumps to interact.");
         sb.idle(60);
         //Example
-        sb.world().modifyBlockEntity(new BlockPos(6, 1, 3), FluidTankBlockEntity.class, be -> be.getTankInventory().setFluid(new FluidStack(getDyeFluid(DyeColor.RED), 16000)));
+        sb.world().modifyBlockEntity(new BlockPos(6, 1, 3), FluidTankBlockEntity.class, be -> be.getTankInventory().setFluid(new FluidStack(ShapeColor.getFluid(DyeColor.RED), 16000)));
         sb.overlay().showControls(new Vec3(6.5, 3, 3.5), Pointing.DOWN, 70).withItem(getDyeFluidBucket(DyeColor.RED));
-        sb.world().modifyBlockEntity(new BlockPos(0, 1, 3), FluidTankBlockEntity.class, be -> be.getTankInventory().setFluid(new FluidStack(getDyeFluid(DyeColor.BLUE), 16000)));
+        sb.world().modifyBlockEntity(new BlockPos(0, 1, 3), FluidTankBlockEntity.class, be -> be.getTankInventory().setFluid(new FluidStack(ShapeColor.getFluid(DyeColor.BLUE), 16000)));
         sb.overlay().showControls(new Vec3(0.5, 3, 3.5), Pointing.DOWN, 70).withItem(getDyeFluidBucket(DyeColor.BLUE));
         sb.idle(20);
         sb.overlay().showControls(new Vec3(3.5, 3, 6.5), Pointing.DOWN, 50).withItem(getDyeFluidBucket(DyeColor.PURPLE));
         sb.idle(60);
     }
 
-    private static Fluid getDyeFluid(DyeColor color) {
-        return CDPFluids.DYES_BY_COLOR.get(color).get();
-    }
-
     private static ItemStack getDyeFluidBucket(DyeColor color) {
-        return getDyeFluid(color).getBucket().getDefaultInstance();
+        return ShapeColor.getFluid(color).getBucket().getDefaultInstance();
     }
 
     private static Vec3 getTunnelFilterVec(BlockPos pos) {

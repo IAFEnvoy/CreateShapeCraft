@@ -2,6 +2,7 @@ package com.iafenvoy.create.shape.data;
 
 import com.iafenvoy.create.shape.registry.CSCTags;
 import net.minecraft.ChatFormatting;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.material.Fluid;
@@ -39,7 +40,12 @@ public enum ShapeColor {
     }
 
     public Fluid getFluid() {
-        return this.dyeColor == null ? Fluids.WATER : CDPFluids.DYES_BY_COLOR.get(this.dyeColor).get();
+        return this.dyeColor == null ? Fluids.WATER : getFluid(this.dyeColor);
+    }
+
+    public static Fluid getFluid(DyeColor dyeColor) {
+        var entry = CDPFluids.DYES_BY_VARIANT.get(ResourceLocation.withDefaultNamespace(dyeColor.getSerializedName()));
+        return entry == null ? Fluids.WATER : entry.get();
     }
 
     public int getColor() {
